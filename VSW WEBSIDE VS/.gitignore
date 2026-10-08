@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.admin-build-check/
+.env
+.env*.local
+backend/.env
+02-BACKEND/uploads/

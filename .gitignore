@@ -1,0 +1,20 @@
+# Dependencies and generated build output
+**/node_modules/
+**/.next/
+**/.next-browser-check/
+**/.admin-build-check/
+**/dist/
+**/.vercel/
+
+# Local configuration and secrets
+**/.env
+**/.env.*
+!**/.env.example
+
+# Runtime data and local logs
+**/uploads/
+*.log
+
+# Local prompt and generated Vite timestamp files
+/prompt.md
+**/vite.config.js.timestamp-*.mjs

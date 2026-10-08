@@ -1,0 +1,36 @@
+{
+  "name": "vsw-solutions-next",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "scripts": {
+    "dev": "next dev --port 5180",
+    "frontend": "next dev --port 5180",
+    "backend": "npm --prefix 02-BACKEND start",
+    "backend:dev": "npm --prefix 02-BACKEND run dev",
+    "dev:all": "concurrently -k \"npm:frontend\" \"npm:backend:dev\"",
+    "seed:admin": "npm --prefix 02-BACKEND run seed:admin",
+    "lint": "eslint app next.config.mjs",
+    "build": "next build",
+    "start": "next start --port 5180",
+    "preview": "next start --port 4173"
+  },
+  "dependencies": {
+    "gsap": "latest",
+    "lucide-react": "latest",
+    "next": "16.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "tailwindcss": "^3.4.17"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "concurrently": "^9.1.2",
+    "eslint": "^10.12.0",
+    "eslint-config-next": "^16.4.0",
+    "postcss": "^8.5.6"
+  }
+}
