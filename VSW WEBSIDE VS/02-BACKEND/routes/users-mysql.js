@@ -1,17 +1,19 @@
 import { Router } from 'express'
 import { body, param, query } from 'express-validator'
 import rateLimit from 'express-rate-limit'
-import { getMyProfile, listMyInquiries, listUsers, loginUser, logoutUser, registerUser, updateUserStatus } from '../controllers/users-mysql.js'
+import { getMyProfile, listMyInquiries, listUsers, loginUser, loginUserWithGoogle, logoutUser, registerUser, updateUserStatus } from '../controllers/users-mysql.js'
 import { changePasswordWithOtp, requestChangeOtp, requestResetOtp, resetPasswordWithOtp } from '../controllers/password-otp.js'
 import { deactivateMyAccount, getDashboardSummary, getMyAccountDashboard, getMySettings, listMyActivity, listMyNotifications, markAllNotificationsRead, markNotificationRead, updateMyProfile, updateMySettings } from '../controllers/dashboard-mysql.js'
 import { getUserInquiryDetails, getUserInquiryMessages } from '../controllers/inquiry-conversation.js'
 import { requireAuth, requireCustomer, requirePermission } from '../middleware/auth-mysql.js'
 import { handleValidation } from '../middleware/validate-mysql.js'
 import { asyncHandler } from '../middleware/errors-mysql.js'
+import { createLoginAttemptLimiter } from '../middleware/login-attempt-limiter.js'
 
 const router = Router()
-const loginLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 15, standardHeaders: true, legacyHeaders: false })
+const loginLimiter = createLoginAttemptLimiter()
 const registerLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 5, standardHeaders: true, legacyHeaders: false })
+const googleLoginLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 20, standardHeaders: true, legacyHeaders: false })
 const otpRequestLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 5, standardHeaders: true, legacyHeaders: false, message: { success: false, message: 'Too many code requests. Please wait 15 minutes and try again.' } })
 const otpVerifyLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 10, standardHeaders: true, legacyHeaders: false, message: { success: false, message: 'Too many code attempts. Please wait 15 minutes and request a new code.' } })
 const inquiryStatuses = ['New','Contacted','In Discussion','Quoted','Follow-up','Converted','Rejected','Closed','Pending','In Progress','Responded','Resolved','Cancelled']
@@ -23,6 +25,7 @@ router.post('/register', registerLimiter, [
   body('password').isLength({ min: 12, max: 72 }).withMessage('Password must be between 12 and 72 characters.'),
 ], handleValidation, asyncHandler(registerUser))
 router.post('/login', loginLimiter, [body('email').isEmail().normalizeEmail(), body('password').isLength({ min: 1, max: 72 })], handleValidation, asyncHandler(loginUser))
+router.post('/google', googleLoginLimiter, [body('credential').isString().isLength({ min: 100, max: 5000 })], handleValidation, asyncHandler(loginUserWithGoogle))
 router.post('/logout', requireCustomer, asyncHandler(logoutUser))
 router.post('/password/reset/request', otpRequestLimiter, [body('email').isEmail().normalizeEmail()], handleValidation, asyncHandler(requestResetOtp))
 router.post('/password/reset', otpVerifyLimiter, [body('email').isEmail().normalizeEmail(), body('otp').matches(/^\d{6}$/), body('password').isLength({ min: 12, max: 72 }).withMessage('Password must be between 12 and 72 characters.')], handleValidation, asyncHandler(resetPasswordWithOtp))

@@ -1,12 +1,12 @@
-import { Router } from 'express'
-import multer from 'multer'
-import { randomUUID } from 'node:crypto'
-import path from 'node:path'
-import { mkdir } from 'node:fs/promises'
-import { body, param, query as queryRule } from 'express-validator'
-import { requireAuth, requirePermission } from '../middleware/auth-mysql.js'
-import { auditAdminMutation } from '../middleware/admin-audit.js'
-import { asyncHandler } from '../middleware/errors-mysql.js'
+import { Router } from 'express';
+import multer from 'multer';
+import { randomUUID } from 'node:crypto';
+import path from 'node:path';
+import { mkdir } from 'node:fs/promises';
+import { body, param, query as queryRule } from 'express-validator';
+import { requireAuth, requirePermission } from '../middleware/auth-mysql.js';
+import { auditAdminMutation } from '../middleware/admin-audit.js';
+import { asyncHandler } from '../middleware/errors-mysql.js';
 import {
   addInquiryNote, createAdminAccount, createAdminProject, createAdminService, dashboard,
   deleteAdminProject, deleteAdminService, deleteAdminUser, getAdminCompany, getAdminInquiry,
@@ -14,10 +14,11 @@ import {
   listAdminProjects, listAdminServices, listAdminUsers, listContacts, listContent, markAdminNotification,
   putContent, report, updateAdminAccount, updateAdminCompany, updateAdminInquiry, updateAdminProject,
   updateAdminService, updateAdminUser, updateContact, deleteContact,
-  listMedia, uploadMediaRecord, updateMedia, deleteMedia, listDocuments, createDocument, updateDocument, deleteDocument, deleteAdminAccount,
+  listMedia, uploadMediaRecord, replaceMediaFile, updateMedia, deleteMedia, listDocuments, createDocument, updateDocument, deleteDocument, deleteAdminAccount,
   markAllAdminNotifications, deleteAdminNotification, changeAdminPassword,
-} from '../controllers/admin-mysql.js'
-import { handleValidation } from '../middleware/validate-mysql.js'
+} from '../controllers/admin-mysql.js';
+import { handleValidation } from '../middleware/validate-mysql.js';
+import { applyThemePreset, deleteThemePreset, getAdminTheme, listThemePresets, listThemeVersions, publishTheme, restoreThemeVersion, saveThemeDraft, saveThemePreset } from '../controllers/theme-mysql.js'
 
 const router = Router()
 router.use(requireAuth)
@@ -27,7 +28,7 @@ const projectRules = [body('title').trim().isLength({min:1,max:190}), body('loca
 const serviceRules = [body('title').trim().isLength({min:1,max:190}), body('slug').trim().matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/), body('description').trim().notEmpty(), body('status').optional().isIn(['active','inactive'])]
 
 router.get('/dashboard',requirePermission('dashboard'),asyncHandler(dashboard))
-router.get('/users',requirePermission('users'),asyncHandler(listAdminUsers))
+router.get('/users',requirePermission('users'),[queryRule('from').optional().isISO8601(),queryRule('to').optional().isISO8601()],handleValidation,asyncHandler(listAdminUsers))
 router.get('/users/:id',requirePermission('users'),id,handleValidation,asyncHandler(getAdminUser))
 router.put('/users/:id',requirePermission('users'),id,[body('name').trim().notEmpty(),body('email').isEmail().normalizeEmail(),body('phone').trim().notEmpty(),body('status').isIn(['active','disabled'])],handleValidation,asyncHandler(updateAdminUser))
 router.delete('/users/:id',requirePermission('users'),id,handleValidation,asyncHandler(deleteAdminUser))
@@ -51,18 +52,28 @@ router.delete('/services/:id',requirePermission('services'),id,handleValidation,
 router.get('/company',requirePermission('company'),asyncHandler(getAdminCompany))
 router.put('/company',requirePermission('company'),[body('companyName').optional().trim().isLength({max:190}),body('email').optional({values:'falsy'}).isEmail()],handleValidation,asyncHandler(updateAdminCompany))
 router.get('/content',requirePermission('content'),asyncHandler(listContent))
-router.put('/content',requirePermission('content'),[body('page').isIn(['home','about','services','projects','contact','footer']),body('section').trim().isLength({min:1,max:100}),body('content').exists()],handleValidation,asyncHandler(putContent))
+router.put('/content',requirePermission('content'),asyncHandler(putContent))
+router.get('/theme',requirePermission('content'),asyncHandler(getAdminTheme))
+router.put('/theme/draft',requirePermission('content'),[body('configuration').isObject()],handleValidation,asyncHandler(saveThemeDraft))
+router.post('/theme/publish',requirePermission('themePublish'),asyncHandler(publishTheme))
+router.get('/theme/versions',requirePermission('content'),asyncHandler(listThemeVersions))
+router.post('/theme/versions/:id/restore',requirePermission('themePublish'),id,handleValidation,asyncHandler(restoreThemeVersion))
+router.get('/theme/presets',requirePermission('content'),asyncHandler(listThemePresets))
+router.post('/theme/presets',[body('name').isString().trim().isLength({min:1,max:80}),body('configuration').isObject()],requirePermission('content'),handleValidation,asyncHandler(saveThemePreset))
+router.post('/theme/presets/:id/apply',requirePermission('content'),id,handleValidation,asyncHandler(applyThemePreset))
+router.delete('/theme/presets/:id',requirePermission('content'),id,handleValidation,asyncHandler(deleteThemePreset))
 
 router.get('/contacts',requirePermission('contactMessages'),asyncHandler(listContacts))
 router.patch('/contacts/:id',requirePermission('contactMessages'),id,body('status').isIn(['Unread','Read','Replied','Closed']),handleValidation,asyncHandler(updateContact))
 router.delete('/contacts/:id',requirePermission('contactMessages'),id,handleValidation,asyncHandler(deleteContact))
 
 router.get('/media',requirePermission('media'),asyncHandler(listMedia))
-const uploadRoot=path.resolve(process.cwd(),'uploads')
+const uploadRoot=path.resolve(process.env.UPLOADS_DIR||path.join(process.cwd(),'uploads'))
 await mkdir(uploadRoot,{recursive:true})
 const storage=multer.diskStorage({destination:(_req,_file,cb)=>cb(null,uploadRoot),filename:(_req,file,cb)=>cb(null,`${Date.now()}-${randomUUID()}${path.extname(file.originalname).toLowerCase()}`)})
 const uploader=multer({storage,limits:{fileSize:15*1024*1024},fileFilter:(_req,file,cb)=>{const ext=path.extname(file.originalname).toLowerCase();const allowed=['.jpg','.jpeg','.png','.webp','.gif','.pdf'];cb(null,allowed.includes(ext)&&(/^(image\/(jpeg|png|webp|gif)|application\/pdf)$/.test(file.mimetype)))}}).single('file')
 router.post('/media',requirePermission('media'),(req,res,next)=>uploader(req,res,error=>error?res.status(400).json({success:false,message:error.code==='LIMIT_FILE_SIZE'?'File size must be 15 MB or less.':'Only JPG, PNG, WEBP, GIF, and PDF files are allowed.'}):next()),asyncHandler(uploadMediaRecord))
+router.put('/media/:id/file',requirePermission('media'),id,handleValidation,(req,res,next)=>uploader(req,res,error=>error?res.status(400).json({success:false,message:error.code==='LIMIT_FILE_SIZE'?'File size must be 15 MB or less.':'Only JPG, PNG, WEBP, GIF, and PDF files are allowed.'}):next()),asyncHandler(replaceMediaFile))
 router.patch('/media/:id',requirePermission('media'),id,[body('originalName').optional().trim().isLength({min:1,max:255}),body('altText').optional().trim().isLength({max:255}),body('relatedType').optional().isIn(['project','service','banner','gallery','general']),body('relatedId').optional({values:'null'}).isInt({min:1})],handleValidation,asyncHandler(updateMedia))
 router.delete('/media/:id',requirePermission('media'),id,handleValidation,asyncHandler(deleteMedia))
 router.get('/documents',requirePermission('documents'),asyncHandler(listDocuments))

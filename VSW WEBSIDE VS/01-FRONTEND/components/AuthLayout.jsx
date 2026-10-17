@@ -4,7 +4,7 @@ export default function AuthLayout({ eyebrow, title, description, children }) {
   return (
     <main className="account-page">
       <header className="account-header">
-        <a href="/" className="brand"><span className="brand-mark">VSW</span><span className="brand-name">SOLUTIONS</span></a>
+        <a href="/" className="brand"><img className="brand-logo" src="/assets/images/vsw-logo.svg" alt="VSW Solutions - A Total Solution" /></a>
         <a className="account-back" href="/"><ArrowLeft size={15} /> Back to website</a>
       </header>
       <div className="account-layout">

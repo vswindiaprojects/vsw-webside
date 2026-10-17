@@ -25,10 +25,14 @@ The website does not connect directly to MySQL. The flow is:
 - `09-seed-current-services.sql`: safely inserts the five service options already used by the public website when the admin services table is empty.
 - `10-session-revocation.sql`: adds session versions used to revoke customer and admin JWTs on logout, password changes and account/role changes.
 - `11-admin-activity-log.sql`: stores successful administrator mutations without request bodies or secrets.
+- `13-theme-customizer.sql`: creates separate draft/published theme configuration and revision history without replacing existing content.
+- `14-media-dimensions.sql`: adds width/height metadata columns to the existing media library for newly uploaded or replaced images.
 - `03-sample-data.sql`: intentionally inserts nothing, so real enquiries are not duplicated.
 - `04-test-queries.sql`: read-only checks.
 - `legacy/`: original project SQL kept for reference; do not import it for the existing one-table setup.
 
-For a new database, run `01-create-database.sql` followed by `02-create-tables.sql`. For an existing database, run `05-customer-accounts.sql` once if customer accounts have not yet been migrated, then run `06-password-reset-otp.sql`, `07-account-dashboard.sql`, and `08-admin-dashboard.sql` once each. Apply `09-seed-current-services.sql` after migration eight; it is idempotent and can be rerun safely. Apply `10-session-revocation.sql` once after the `users` and `admins` tables exist, then apply `11-admin-activity-log.sql`. Migrations eight and ten reuse existing tables; apply them once after those base tables exist.
+For a new database, run `01-create-database.sql` followed by `02-create-tables.sql`. For an existing database, run `05-customer-accounts.sql` once if customer accounts have not yet been migrated, then run `06-password-reset-otp.sql`, `07-account-dashboard.sql`, and `08-admin-dashboard.sql` once each. Apply `09-seed-current-services.sql` after migration eight; it is idempotent and can be rerun safely. Apply `10-session-revocation.sql` once after the `users` and `admins` tables exist, then apply `11-admin-activity-log.sql`, `13-theme-customizer.sql`, and `14-media-dimensions.sql`. Migration 13 requires the existing `admins` table and initializes separate draft/published theme storage. Migration 14 requires the media table from migration 08.
 
 Run SQL from MySQL Workbench or the MySQL command line. Never put a MySQL password in these files.
+
+Apply `13-theme-customizer.sql` once after the existing database and `admins` table are set up, then apply migration 14 after the media library exists. The public website reads only the published configuration; administrators edit a private draft and explicitly publish it.

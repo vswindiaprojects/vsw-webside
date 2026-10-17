@@ -26,7 +26,7 @@ export const requireAuth = async (req, res, next) => {
 
 const permissions = {
   super_admin: ['*'],
-  admin: ['dashboard','users','inquiries','projects','services','company','content','media','documents','contactMessages','notifications','reports','settings'],
+  admin: ['dashboard','users','inquiries','projects','services','company','content','media','documents','contactMessages','notifications','reports','settings','themePublish'],
   manager: ['inquiries','projects'],
   editor: ['services','content','media'],
   support_staff: ['inquiries','contactMessages'],

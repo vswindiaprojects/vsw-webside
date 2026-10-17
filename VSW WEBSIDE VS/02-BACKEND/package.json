@@ -10,7 +10,8 @@
     "migrate:audit": "node scripts/apply-admin-audit-migration.js",
     "seed:portfolio": "node scripts/seed-portfolio-projects.js",
     "security:smoke": "node scripts/security-smoke.js",
-    "seed:admin": "node scripts/seed-admin.js"
+    "seed:admin": "node scripts/seed-admin.js",
+    "migrate:google": "node scripts/apply-google-account-migration.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -19,6 +20,7 @@
     "express": "^4.21.2",
     "express-rate-limit": "^7.5.0",
     "express-validator": "^7.2.1",
+    "google-auth-library": "^11.3.1",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",

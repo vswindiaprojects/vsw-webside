@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
 import { ArrowRight } from 'lucide-react'
 import AuthLayout from '../components/AuthLayout'
+import GoogleSignIn from '../components/GoogleSignIn'
 import { useAuth } from '../services/AuthContext'
 
 export default function Register() {
-  const { register } = useAuth()
+  const { register, loginWithGoogle } = useAuth()
   const [form, setForm] = useState({ name: '', email: '', phone: '', password: '', confirmPassword: '' })
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
-  const returnTo = new URLSearchParams(window.location.search).get('returnTo') || '/'
+  const requestedReturnTo = new URLSearchParams(window.location.search).get('returnTo')
+  const returnTo = requestedReturnTo?.startsWith('/') && !requestedReturnTo.startsWith('//') ? requestedReturnTo : '/'
 
   useEffect(() => { document.title = 'Create Account | VSW Solutions' }, [])
   const update = (field) => (event) => setForm((current) => ({ ...current, [field]: event.target.value }))
@@ -28,6 +30,19 @@ export default function Register() {
     }
   }
 
+  const signUpWithGoogle = async (credential) => {
+    setError('')
+    setBusy(true)
+    try {
+      await loginWithGoogle(credential)
+      window.location.assign(returnTo)
+    } catch (requestError) {
+      throw requestError
+    } finally {
+      setBusy(false)
+    }
+  }
+
   return <AuthLayout eyebrow="GET STARTED" title={<>Build with<br /><em>confidence.</em></>} description="Create your client account to connect your project conversations with our team.">
     <h2 id="account-title">Create your account.</h2>
     <p className="account-muted">All fields are required to register.</p>
@@ -40,6 +55,8 @@ export default function Register() {
       {error && <p className="account-error" role="alert">{error}</p>}
       <button className="account-submit" type="submit" disabled={busy}>{busy ? 'Creating account…' : 'Create account'} <ArrowRight size={17} /></button>
     </form>
+    <div className="account-or"><span>or sign up with</span></div>
+    <GoogleSignIn mode="signup" onCredential={signUpWithGoogle} />
     <p className="account-switch">Already have an account? <a href={`/login?returnTo=${encodeURIComponent(returnTo)}`}>Sign in</a></p>
     <p className="account-admin-note">Administrator access is separate. <a href="/admin">Admin sign in</a></p>
   </AuthLayout>

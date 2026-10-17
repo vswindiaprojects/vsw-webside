@@ -14,6 +14,7 @@ export default function ContactInquiry({ services, company, content = {} }) {
   const headOfficeText = company.headOffice || 'Shop No. 6, Makkesh Apartment Co-op. HSG. SOC. LTD., Building No. 1 & 2, Near D-Mart Ready, Navghar Road, Bhayander East, Maharashtra, India.'
   const branchOfficeText = company.branchOffice || 'Shop No. 1, Mauli Chhaya CHS, Konkani Pada, Kurar Village, Malad (East), Mumbai - 400097, Maharashtra, India.'
   const mapQuery = (text) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(text)}`
+  const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(headOfficeText)}&z=15&output=embed`
   const authLink = (path) => `${path}?returnTo=${encodeURIComponent('/#contact')}`
   const submit = async (event) => {
     event.preventDefault()
@@ -84,7 +85,7 @@ export default function ContactInquiry({ services, company, content = {} }) {
         </div>
       </div>
       <div className="shell offices"><div className="office"><span>Head Office</span><a href={company.googleMapUrl || mapQuery(headOfficeText)} target="_blank" rel="noreferrer"><p>{headOfficeText}</p></a></div><div className="office"><span>Branch Office</span><a href={mapQuery(branchOfficeText)} target="_blank" rel="noreferrer"><p>{branchOfficeText}</p></a></div><div className="office"><span>Get in touch</span><p>Mobile: {company.phone1 || '+91 98672 67499'}<br />{company.phone2 || '+91 91365 14351'}{company.officeHours ? <><br />{company.officeHours}</> : null}</p><a href={`mailto:${company.email || 'vswindiaprojects@gmail.com'}`}>{company.email || 'vswindiaprojects@gmail.com'}</a><a href={`https://${(company.website || 'vswsolutions.com').replace(/^https?:\/\//, '')}`} target="_blank" rel="noreferrer">{(company.website || 'https://vswsolutions.com').replace(/^https?:\/\//, '')}</a></div></div>
-      <div className="map-wrap"><iframe title="VSW Solutions office area map" src={company.googleMapUrl || `https://www.google.com/maps?q=${encodeURIComponent(headOfficeText)}&output=embed`} loading="lazy" /></div>
+      <div className="map-wrap" aria-label="VSW Solutions head office location"><iframe title="Map showing the VSW Solutions head office" src={mapEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" /></div>
     </section>
   </>
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ArrowRight } from 'lucide-react'
 import AuthLayout from '../components/AuthLayout'
+import GoogleSignIn from '../components/GoogleSignIn'
 import { useAuth } from '../services/AuthContext'
 
 const safeReturnPath = () => {
@@ -9,7 +10,7 @@ const safeReturnPath = () => {
 }
 
 export default function Login() {
-  const { user, login, loading } = useAuth()
+  const { user, login, loginWithGoogle, loading } = useAuth()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -36,6 +37,19 @@ export default function Login() {
     }
   }
 
+  const signInWithGoogle = async (credential) => {
+    setError('')
+    setBusy(true)
+    try {
+      await loginWithGoogle(credential)
+      window.location.assign(safeReturnPath())
+    } catch (requestError) {
+      throw requestError
+    } finally {
+      setBusy(false)
+    }
+  }
+
   return <AuthLayout eyebrow="WELCOME BACK" title={<>A clearer way<br />to <em>move forward.</em></>} description="Sign in to manage your profile and follow your VSW project enquiries.">
     <h2 id="account-title">Client sign in.</h2>
     <p className="account-muted">Enter your email and password to continue.</p>
@@ -49,6 +63,8 @@ export default function Login() {
       {error && <p className="account-error" role="alert">{error}</p>}
       <button className="account-submit" type="submit" disabled={busy}>{busy ? 'Signing in…' : 'Sign in'} <ArrowRight size={17} /></button>
     </form>
+    <div className="account-or"><span>or continue with</span></div>
+    <GoogleSignIn mode="signin" onCredential={signInWithGoogle} />
     <p className="account-switch">New to VSW? <a href={`/register?returnTo=${encodeURIComponent(new URLSearchParams(window.location.search).get('returnTo') || '/')}`}>Create an account</a></p>
     <p className="account-admin-note">Administrator access is separate. <a href="/admin">Admin sign in</a></p>
   </AuthLayout>

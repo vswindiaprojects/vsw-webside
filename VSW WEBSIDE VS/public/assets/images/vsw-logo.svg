@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 45 1280 450" role="img" aria-labelledby="title desc">
+  <title id="title">VSW Solutions</title>
+  <desc id="desc">VSW Solutions, A Total Solution. Build for the Enthusiast.</desc>
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f2cb47"/><stop offset=".48" stop-color="#b88008"/><stop offset="1" stop-color="#e1b52d"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke="url(#gold)" stroke-width="16" stroke-linejoin="miter" stroke-linecap="square">
+    <path d="M55 470h410M96 465V285h88v180M124 465V240h89v225M154 465V208h91v257M183 465V245h89v220M212 465V296h85v169M241 465V333h70v132"/>
+    <path d="M125 280h122v36H125M154 245h121v36H154M182 212h122v36H182M211 280h119v36H211M241 332h107v36H241"/>
+    <path d="M164 225V128M191 225V128M219 225V84M249 225V84M279 225V84M309 244V127M338 272V149M367 300V174"/>
+    <path d="M306 367h79v98M336 401h50"/>
+  </g>
+  <g fill="url(#gold)">
+    <text x="555" y="278" font-family="Arial, Helvetica, sans-serif" font-size="206" font-weight="700" letter-spacing="-16">VSW</text>
+    <text x="559" y="363" font-family="Georgia, 'Times New Roman', serif" font-size="39" letter-spacing="24">A TOTAL SOLUTION</text>
+    <path d="M535 420h62v5h-62zm661 0h62v5h-62z"/>
+    <text x="630" y="447" font-family="Georgia, 'Times New Roman', serif" font-size="36" font-weight="700" letter-spacing="2">BUILD FOR THE ENTHUSIAST</text>
+  </g>
+</svg>

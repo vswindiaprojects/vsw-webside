@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { ArrowLeft, ArrowRight, Eye, EyeOff, ShieldCheck } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Eye, EyeOff } from 'lucide-react'
 
 export default function AdminLogin({ email, password, error, isSigningIn, onEmailChange, onPasswordChange, onSubmit }) {
   const [showPassword, setShowPassword] = useState(false)
   return <div className="admin-login">
     <a href="/" className="admin-back"><ArrowLeft size={16} /> Back to website</a>
     <main className="admin-login-card">
-      <div className="admin-login-mark"><ShieldCheck size={25} /></div>
+      <img className="admin-login-logo" src="/assets/images/vsw-logo.svg" alt="VSW Solutions" />
       <p className="eyebrow">VSW SOLUTIONS / ADMIN</p>
       <h1>Welcome back.</h1>
       <p>Sign in to manage website content and enquiries.</p>

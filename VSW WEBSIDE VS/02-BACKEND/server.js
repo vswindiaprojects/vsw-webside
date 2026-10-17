@@ -1,5 +1,6 @@
 import 'dotenv/config'
 import express from 'express'
+import path from 'node:path'
 import cors from 'cors'
 import helmet from 'helmet'
 import morgan from 'morgan'
@@ -39,7 +40,7 @@ app.use('/api/auth', auth)
 app.use('/api/users', users)
 app.use('/api/admin', admin)
 app.use('/api/content', content)
-app.use('/uploads', express.static('uploads'))
+app.use('/uploads', express.static(path.resolve(process.env.UPLOADS_DIR||path.join(process.cwd(),'uploads'))))
 app.use(notFound)
 app.use(errorHandler)
 

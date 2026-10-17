@@ -2,10 +2,65 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { randomBytes } from 'node:crypto'
 import { query } from '../config/db.js'
+import { OAuth2Client } from 'google-auth-library'
 
 const publicUser = ({ id, name, email, phone, company_name: companyName = '', address = '', city = '', state = '', country = '', postal_code: postalCode = '', profile_image: profileImage = null, role, status, created_at: createdAt, last_login_at: lastLoginAt = null }) => ({ id, name, email, phone, companyName, address, city, state, country, postalCode, profileImage, role, status, createdAt, lastLoginAt })
 const dummyPasswordHash = bcrypt.hash(randomBytes(32).toString('hex'), 12)
 const issueUserToken = (user) => jwt.sign({ id: user.id, role: user.role, sessionVersion: Number(user.session_version) || 0 }, process.env.JWT_SECRET, { expiresIn: '8h' })
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+
+export const loginUserWithGoogle = async (req, res) => {
+  const clientId = process.env.GOOGLE_CLIENT_ID
+  if (!clientId) return res.status(503).json({ success: false, message: 'Google sign-in is not configured. Set GOOGLE_CLIENT_ID on the backend and VITE_GOOGLE_CLIENT_ID on the frontend.' })
+  let profile
+  try {
+    const ticket = await googleClient.verifyIdToken({ idToken: req.body.credential, audience: clientId })
+    profile = ticket.getPayload()
+  } catch {
+    return res.status(401).json({ success: false, message: 'Google could not verify this sign-in. Please try again.' })
+  }
+  const googleSub = String(profile?.sub || '')
+  const email = String(profile?.email || '').trim().toLowerCase()
+  const name = String(profile?.name || '').trim().slice(0, 120)
+  if (!googleSub || !email || !name || profile.email_verified !== true) return res.status(401).json({ success: false, message: 'Use a Google account with a verified email address.' })
+
+  let [[user]] = await query('SELECT id,name,email,phone,profile_image,role,status,created_at,last_login_at,session_version,google_sub AS googleSub FROM users WHERE google_sub=? OR email=? LIMIT 1', [googleSub, email])
+  if (user?.googleSub && user.googleSub !== googleSub) return res.status(409).json({ success: false, message: 'This email is already linked to a different Google account. Sign in using the original method.' })
+  if (user && !user.googleSub) {
+    try {
+      await query('UPDATE users SET google_sub=? WHERE id=? AND google_sub IS NULL', [googleSub, user.id])
+      user.googleSub = googleSub
+    } catch (error) {
+      if (error.code === 'ER_DUP_ENTRY') return res.status(409).json({ success: false, message: 'This Google account is already linked to another user.' })
+      throw error
+    }
+  }
+  if (user?.status === 'disabled') return res.status(403).json({ success: false, message: 'This account is disabled. Contact VSW Solutions for help.' })
+
+  if (!user) {
+    try {
+      const randomPasswordHash = await bcrypt.hash(randomBytes(48).toString('base64url'), 12)
+      const [created] = await query("INSERT INTO users (name,email,phone,password_hash,profile_image,google_sub,role,status,last_login_at) VALUES (?,?, '', ?, ?, ?, 'USER','active',UTC_TIMESTAMP())", [name, email, randomPasswordHash, String(profile.picture || '').slice(0, 500) || null, googleSub])
+      const [rows] = await query('SELECT id,name,email,phone,profile_image,role,status,created_at,last_login_at,session_version FROM users WHERE id=?', [created.insertId])
+      user = rows[0]
+      await query('INSERT IGNORE INTO user_settings (user_id) VALUES (?)', [user.id])
+      await query("INSERT INTO admin_notifications(admin_id,type,title,message,entity_type,entity_id) VALUES(NULL,'user_registered','New user registered',CONCAT(?, ' created an account with Google.'),'user',?)", [name, user.id])
+    } catch (error) {
+      if (error.code !== 'ER_DUP_ENTRY') throw error
+      ;[[user]] = await query('SELECT id,name,email,phone,profile_image,role,status,created_at,last_login_at,session_version,google_sub AS googleSub FROM users WHERE google_sub=? OR email=? LIMIT 1', [googleSub, email])
+      if (!user || (user.googleSub && user.googleSub !== googleSub)) return res.status(409).json({ success: false, message: 'This email is already linked to a different Google account. Sign in using the original method.' })
+      if (!user.googleSub) {
+        await query('UPDATE users SET google_sub=? WHERE id=? AND google_sub IS NULL', [googleSub, user.id])
+        user.googleSub = googleSub
+      }
+    }
+  } else {
+    await query('UPDATE users SET last_login_at=UTC_TIMESTAMP(), profile_image=COALESCE(profile_image, ?) WHERE id=?', [String(profile.picture || '').slice(0, 500) || null, user.id])
+    user.last_login_at = new Date()
+  }
+  if (user.status !== 'active') return res.status(403).json({ success: false, message: 'This account is unavailable. Contact VSW Solutions for help.' })
+  return res.json({ success: true, data: publicUser(user), token: issueUserToken(user) })
+}
 
 export const registerUser = async (req, res) => {
   const { name, email, phone, password } = req.body

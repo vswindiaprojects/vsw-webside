@@ -20,6 +20,13 @@ export function AuthProvider({ children }) {
     return result
   }
 
+  const loginWithGoogle = async (credential) => {
+    const result = await api.userGoogleLogin(credential)
+    localStorage.setItem('vsw_user_token', result.token)
+    setUser(result.data)
+    return result
+  }
+
   const register = (details) => api.userRegister(details)
 
   const logout = async () => {
@@ -29,7 +36,7 @@ export function AuthProvider({ children }) {
     setUser(null)
   }
 
-  const value = useMemo(() => ({ user, loading, login, register, logout }), [user, loading])
+  const value = useMemo(() => ({ user, loading, login, loginWithGoogle, register, logout }), [user, loading])
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
