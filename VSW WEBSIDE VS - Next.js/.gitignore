@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.next/
+.admin-build-check/
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+backend/.env
+02-BACKEND/uploads/

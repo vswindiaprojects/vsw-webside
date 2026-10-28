@@ -1,0 +1,30 @@
+{
+  "name": "vsw-solutions-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "frontend": "vite",
+    "backend": "npm --prefix 02-BACKEND start",
+    "backend:dev": "npm --prefix 02-BACKEND run dev",
+    "dev:all": "concurrently \"npm run frontend\" \"npm run backend:dev\"",
+    "seed:admin": "npm --prefix 02-BACKEND run seed:admin",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "gsap": "latest",
+    "lucide-react": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "tailwindcss": "^3.4.17",
+    "vite": "^4.5.14"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "concurrently": "^9.1.2",
+    "postcss": "^8.5.6"
+  }
+}

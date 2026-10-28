@@ -1,0 +1,357 @@
+/* Premium animated project counter (ring design) */
+.project-counter-section {
+  --pc-accent: #c9a45c;
+  --pc-bg: #07131f;
+  --pc-text: #fff;
+  --pc-ease: cubic-bezier(0.33, 1, 0.68, 1);
+  --pc-muted: color-mix(in srgb, var(--pc-text) 70%, transparent);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(48px, 8vw, 110px) clamp(16px, 4vw, 48px);
+  border-top: 1px solid var(--line, rgba(255, 255, 255, .12));
+  border-bottom: 1px solid var(--line, rgba(255, 255, 255, .12));
+  background: var(--pc-bg);
+  color: var(--pc-text);
+  font-family: var(--theme-body-font, "DM Sans", system-ui, sans-serif);
+}
+
+.pc__card {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(40px, 6vw, 80px) clamp(20px, 5vw, 64px);
+  text-align: center;
+  border-radius: clamp(16px, 2vw, 24px);
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid color-mix(in srgb, var(--pc-accent) 25%, transparent);
+  background:
+    radial-gradient(60% 55% at 50% 0%, color-mix(in srgb, var(--pc-accent) 13%, transparent), transparent 70%),
+    linear-gradient(180deg, color-mix(in srgb, var(--pc-bg) 88%, var(--pc-text)), var(--pc-bg));
+  opacity: 0;
+  transform: translate3d(0, 32px, 0);
+  transition: opacity 1s var(--pc-ease), transform 1s var(--pc-ease), border-color 0.4s, box-shadow 0.4s;
+}
+
+.project-counter-section.is-in .pc__card {
+  opacity: 1;
+  transform: none;
+}
+
+.pc-hover .pc__card:hover {
+  border-color: color-mix(in srgb, var(--pc-accent) 55%, transparent);
+  box-shadow: 0 24px 80px -30px color-mix(in srgb, var(--pc-accent) 40%, transparent);
+}
+
+/* subtle moving diagonal lines (transform only, seamless loop) */
+.pc__lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: calc(100% + 80px);
+  z-index: -1;
+  background: repeating-linear-gradient(115deg, transparent 0 60px, color-mix(in srgb, var(--pc-text) 6%, transparent) 60px 61px);
+  animation: pc-lines 10s linear infinite;
+  -webkit-mask-image: radial-gradient(circle at 50% 40%, #000 25%, transparent 75%);
+  mask-image: radial-gradient(circle at 50% 40%, #000 25%, transparent 75%);
+}
+
+@keyframes pc-lines {
+  to { transform: translate3d(-67.3px, 0, 0); }
+}
+
+/* gold light sweeping the top edge */
+.pc__card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--pc-accent), transparent);
+  transform: translate3d(-100%, 0, 0);
+  animation: pc-sweep 5s ease-in-out 1.2s infinite;
+}
+
+@keyframes pc-sweep {
+  to { transform: translate3d(250%, 0, 0); }
+}
+
+.pc__head,
+.pc__hero,
+.pc__stats {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  transition: opacity 0.9s var(--pc-ease), transform 0.9s var(--pc-ease);
+}
+
+.project-counter-section.is-in :is(.pc__head, .pc__hero, .pc__stats) {
+  opacity: 1;
+  transform: none;
+}
+
+.pc__eyebrow {
+  margin: 0 0 18px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--pc-accent);
+  transition-delay: 0.2s;
+}
+
+.pc__title {
+  margin: 0 0 18px;
+  color: var(--pc-text);
+  font: 700 clamp(30px, 5vw, 54px)/1.1 var(--theme-heading-font, "Space Grotesk", sans-serif);
+  letter-spacing: -0.02em;
+  transition-delay: 0.35s;
+}
+
+.pc__sub {
+  max-width: 620px;
+  margin: 0 auto clamp(28px, 5vw, 52px);
+  font-size: clamp(14px, 1.6vw, 17px);
+  line-height: 1.7;
+  color: var(--pc-muted);
+  transition-delay: 0.5s;
+}
+
+.pc__hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition-delay: 0.65s;
+}
+
+.pc__ring {
+  position: relative;
+  width: clamp(230px, 32vw, 320px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  transition: transform 0.6s var(--pc-ease);
+}
+
+.pc-hover .pc__ring:hover {
+  transform: scale(1.03);
+}
+
+.pc__ring svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.pc__track {
+  fill: none;
+  stroke: color-mix(in srgb, var(--pc-text) 10%, transparent);
+  stroke-width: 2;
+}
+
+.pc__orbit {
+  fill: none;
+  stroke: var(--pc-accent);
+  stroke-width: 1;
+  stroke-dasharray: 2 14;
+  opacity: 0.5;
+  transform-origin: center;
+  animation: pc-orbit 40s linear infinite;
+}
+
+@keyframes pc-orbit {
+  to { transform: rotate(360deg); }
+}
+
+.pc__arc {
+  fill: none;
+  stroke: var(--pc-accent);
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+.pc__num {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  color: var(--pc-text);
+  font: 700 clamp(72px, 11vw, 112px)/1 var(--theme-heading-font, "Space Grotesk", sans-serif);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  will-change: opacity;
+}
+
+.pc__count {
+  display: inline-block;
+  text-align: right;
+}
+
+.pc__num sup {
+  font-size: 0.4em;
+  line-height: 1;
+  color: var(--pc-accent);
+  margin: 0.1em 0 0 4px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-0.18em);
+  transition: none;
+}
+
+.pc__num.is-complete sup {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.pc__label {
+  margin: 20px 0 0;
+  color: var(--pc-accent);
+  font-size: clamp(11px, 1.2vw, 13px);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.pc__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-top: clamp(32px, 5vw, 56px);
+  transition-delay: 0.85s;
+}
+
+.pc__stat {
+  min-width: 0;
+  padding: 22px 12px;
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--pc-text) 9%, transparent);
+  background: color-mix(in srgb, var(--pc-text) 2%, transparent);
+  transition: transform 0.4s var(--pc-ease), border-color 0.4s, background 0.4s;
+}
+
+.pc-hover .pc__stat:hover {
+  transform: translate3d(0, -4px, 0);
+  border-color: color-mix(in srgb, var(--pc-accent) 55%, transparent);
+  background: color-mix(in srgb, var(--pc-accent) 6%, transparent);
+}
+
+.pc__snum {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  color: var(--pc-text);
+  font: 700 clamp(30px, 4.5vw, 44px)/1 var(--theme-heading-font, "Space Grotesk", sans-serif);
+  font-variant-numeric: tabular-nums;
+  will-change: opacity;
+}
+
+.pc__ssuf {
+  color: var(--pc-accent);
+  opacity: 0;
+  visibility: hidden;
+  transition: none;
+}
+
+.pc__snum.is-complete .pc__ssuf {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.28s ease;
+}
+
+.pc__slabel {
+  margin: 10px 0 0;
+  color: var(--pc-muted);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.pc__preview-note {
+  margin: 18px 0 0;
+  color: #a3382f;
+  font-size: 11px;
+  text-align: center;
+}
+
+/* Flags from the admin */
+.pc-no-lines .pc__lines,
+.pc-static .pc__lines,
+.pc-static .pc__card::before,
+.pc-static .pc__orbit {
+  animation: none !important;
+}
+
+.pc-no-lines .pc__lines {
+  display: none;
+}
+
+.pc-no-hover .pc__card:hover {
+  border-color: color-mix(in srgb, var(--pc-accent) 25%, transparent);
+  box-shadow: none;
+}
+
+.pc-no-hover .pc__ring:hover {
+  transform: none;
+}
+
+.pc-preview {
+  padding-block: clamp(24px, 4vw, 40px);
+}
+
+.pc-preview .pc__card {
+  padding-block: clamp(28px, 4vw, 48px);
+}
+
+@media (max-width: 760px) {
+  .project-counter-section {
+    padding-block: clamp(52px, 9vw, 72px);
+  }
+
+  .pc__card {
+    padding: 34px 18px 38px;
+  }
+
+  .pc__title {
+    font-size: clamp(26px, 7vw, 34px);
+  }
+
+  .pc__sub {
+    margin-bottom: 30px;
+  }
+
+  .pc__stats {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    margin-top: 34px;
+  }
+}
+
+@media (max-width: 420px) {
+  .pc__num {
+    font-size: clamp(64px, 22vw, 88px);
+  }
+
+  .pc__label {
+    letter-spacing: 0.2em;
+  }
+
+  .pc__stat {
+    padding: 18px 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-counter-section *,
+  .project-counter-section *::before {
+    animation: none !important;
+    transition-duration: 0.01s !important;
+    transition-delay: 0s !important;
+  }
+}
