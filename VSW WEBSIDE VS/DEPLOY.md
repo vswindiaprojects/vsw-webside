@@ -72,6 +72,7 @@ Manual variables:
 
 ```
 NODE_ENV=production
+DB_SSL=true
 JWT_SECRET=<long random string, 64+ chars>
 ADMIN_EMAIL=vswindiaprojects@gmail.com
 ADMIN_PASSWORD=Vswindia@2026!
@@ -79,6 +80,22 @@ FRONTEND_URL=https://your-vercel-app.vercel.app
 UPLOADS_DIR=uploads
 INQUIRY_RECEIVER_EMAIL=vswindiaprojects@gmail.com
 ```
+
+### Using Aiven MySQL instead of Railway MySQL
+
+Aiven requires TLS, so set `DB_SSL=true` and use the Aiven connection values:
+
+```
+DB_HOST=vswsolutionmysql-db-vswindiaprojects-a5fb.d.aivencloud.com
+DB_PORT=12414
+DB_USER=avnadmin
+DB_PASSWORD=<aiven password>
+DB_NAME=vsw_solutions
+DB_SSL=true
+```
+
+The service database must contain the 24 tables (import `vsw_solution.sql`).
+
 
 `FRONTEND_URL` can hold several comma separated origins:
 `https://your-app.vercel.app,https://www.yourdomain.com`
