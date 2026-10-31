@@ -6,3 +6,4 @@ dist/
 backend/.env
 02-BACKEND/.env
 02-BACKEND/uploads/
+.vercel

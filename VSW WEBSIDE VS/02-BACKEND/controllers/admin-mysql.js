@@ -26,10 +26,10 @@ export const dashboard = async (req, res) => {
   const [recentProjects] = await query('SELECT id, title, location, category, status, created_at AS createdAt FROM projects WHERE archived_at IS NULL ORDER BY created_at DESC LIMIT 6')
   const [recentActivity] = await query("SELECT id, type, title, message, is_read AS isRead, created_at AS createdAt FROM admin_notifications WHERE admin_id IS NULL OR admin_id=? ORDER BY created_at DESC LIMIT 8", [req.user.id])
   const [[unreadNotifications]] = await query('SELECT COUNT(*) AS total FROM admin_notifications WHERE is_read=0 AND (admin_id IS NULL OR admin_id=?)', [req.user.id])
-  const [inquiryTrend] = await query(`SELECT DATE_FORMAT(created_at, '%Y-%m-%d') AS day, COUNT(*) AS total FROM \`${inquiriesTable}\` WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 13 DAY) AND archived_at IS NULL GROUP BY DATE(created_at) ORDER BY day`)
+  const [inquiryTrend] = await query(`SELECT DATE_FORMAT(created_at, '%Y-%m-%d') AS day, COUNT(*) AS total FROM \`${inquiriesTable}\` WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 13 DAY) AND archived_at IS NULL GROUP BY day ORDER BY day`)
   const [inquiryStatuses] = await query(`SELECT status, COUNT(*) AS total FROM \`${inquiriesTable}\` WHERE archived_at IS NULL GROUP BY status ORDER BY total DESC`)
   const [projectStatuses] = await query("SELECT status, COUNT(*) AS total FROM projects WHERE archived_at IS NULL GROUP BY status ORDER BY total DESC")
-  const [userTrend] = await query("SELECT DATE_FORMAT(created_at, '%Y-%m-%d') AS day, COUNT(*) AS total FROM users WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 13 DAY) GROUP BY DATE(created_at) ORDER BY day")
+  const [userTrend] = await query("SELECT DATE_FORMAT(created_at, '%Y-%m-%d') AS day, COUNT(*) AS total FROM users WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 13 DAY) GROUP BY day ORDER BY day")
   res.json({ success: true, data: { totals: { users: users.total, inquiries: inquiries.total, newInquiries: Number(inquiries.newCount || 0), pendingInquiries: Number(inquiries.pendingCount || 0), projects: projects.total, activeProjects: Number(projects.activeCount || 0), completedProjects: Number(projects.completedCount || 0), services: services.total, contactMessages: contacts.total, unreadNotifications: Number(unreadNotifications.total || 0) }, recentInquiries, recentUsers, recentProjects, recentActivity, inquiryTrend, inquiryStatuses, projectStatuses, userTrend } })
 }
 
