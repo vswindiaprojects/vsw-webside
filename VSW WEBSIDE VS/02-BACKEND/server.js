@@ -46,4 +46,4 @@ app.use('/uploads', express.static(path.resolve(process.env.UPLOADS_DIR||path.jo
 app.use(notFound)
 app.use(errorHandler)
 
-app.listen(port, () => console.log(`VSW MySQL API listening on http://localhost:${port}`))
+app.listen(port, '0.0.0.0', () => console.log(`VSW MySQL API listening on 0.0.0.0:${port}`))
