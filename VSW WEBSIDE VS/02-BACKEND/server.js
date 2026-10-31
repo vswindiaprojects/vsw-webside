@@ -31,7 +31,17 @@ app.use(cors(corsOptions))
 app.use(morgan(':remote-addr :method :status :response-time ms'))
 app.use(express.json({ limit: '100kb' }))
 app.use(express.urlencoded({ extended: true, limit: '100kb' }))
-app.get('/api/health', async (req, res, next) => { try { await query('SELECT 1 AS connected'); res.json({ success: true, database: 'mysql', message: 'VSW API is running.' }) } catch (error) { next(error) } })
+app.get('/api/health', async (req, res) => {
+	const payload = { success: true, service: 'vsw-api', uptime: Math.round(process.uptime()), database: 'unknown', message: 'VSW API is running.' }
+	try {
+		await query('SELECT 1 AS connected')
+		payload.database = 'connected'
+	} catch (error) {
+		payload.database = 'unreachable'
+		if (process.env.NODE_ENV !== 'production') payload.databaseError = error.code || error.message
+	}
+	res.status(200).json(payload)
+})
 app.use('/api/projects', projects)
 app.use('/api/services', services)
 app.use('/api/contact', contact)
@@ -46,4 +56,8 @@ app.use('/uploads', express.static(path.resolve(process.env.UPLOADS_DIR||path.jo
 app.use(notFound)
 app.use(errorHandler)
 
-app.listen(port, '0.0.0.0', () => console.log(`VSW MySQL API listening on 0.0.0.0:${port}`))
+const server = app.listen(port, '0.0.0.0', () => console.log(`VSW MySQL API listening on 0.0.0.0:${port}`))
+server.on('error', (error) => {
+	console.error(`HTTP server failed to start on port ${port}: ${error.code || error.message}`)
+	process.exit(1)
+})
