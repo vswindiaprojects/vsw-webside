@@ -16,6 +16,7 @@ const Register = lazy(() => import('./Register'))
 const UserDashboard = lazy(() => import('./UserDashboard'))
 const ForgotPassword = lazy(() => import('./ForgotPassword'))
 const ChangePassword = lazy(() => import('./ChangePassword'))
+const Legal = lazy(() => import('./Legal'))
 
 const routeFallback = <div className="route-loading" role="status" aria-live="polite">Loading…</div>
 const route = (element) => <Suspense fallback={routeFallback}>{element}</Suspense>
@@ -149,7 +150,7 @@ function Footer({ company = {}, content = {}, theme = {} }) {
   const footer = theme.footer || {}
   const footerLinks = theme.menus?.footer?.filter((item) => item.visible) || navItems.slice(0,4).map(([label,id]) => ({ label, url: `#${id}` }))
   const logo = branding.footerLogo || branding.primaryLogo || '/assets/images/vsw-logo.png'
-  return <footer className="footer"><div className="shell footer-main"><div><a href={branding.logoHref||'#home'} className="brand footer-brand"><img className="brand-logo" src={logo} alt={branding.logoAlt || 'VSW Solutions - A Total Solution'} style={{ '--theme-logo-width': `${branding.logoWidth || 220}px`, '--theme-footer-logo-width': `${branding.footerLogoWidth || branding.logoWidth || 220}px` }}/></a>{(footer.description||content.tagline||content.subTagline)&&<p className="footer-tagline">{footer.description||content.tagline||company.tagline}{!footer.description&&content.subTagline&&<><br/><em>{content.subTagline}</em></>}</p>}</div><div className="footer-links"><span>Explore</span>{footerLinks.map((item)=><a key={`${item.label}-${item.url}`} href={item.url}>{item.label}</a>)}</div><div className="footer-links"><span>Connect</span><a href={'tel:'+(footer.phone||phone1).replace(/[^+\d]/g,'')}>{footer.phone||phone1}</a><a href={'tel:'+phone2.replace(/[^+\d]/g,'')}>{phone2}</a><a href={'mailto:'+(footer.email||email)}>{footer.email||email}</a><a href={footer.website|| (website.startsWith('http')?website:'https://'+website)}>{(footer.website||website).replace(/^https?:\/\//,'')}</a><a href="/login">Client Login</a></div></div><div className="shell footer-bottom"><span>{footer.copyright||`© 2026 ${company.companyName||'VSW Solutions'}. All Rights Reserved.`}</span><span>{content.copyrightTagline||'Showcasing our expertise. Delivering excellence.'}</span></div></footer>
+  return <footer className="footer"><div className="shell footer-main"><div><a href={branding.logoHref||'#home'} className="brand footer-brand"><img className="brand-logo" src={logo} alt={branding.logoAlt || 'VSW Solutions - A Total Solution'} style={{ '--theme-logo-width': `${branding.logoWidth || 220}px`, '--theme-footer-logo-width': `${branding.footerLogoWidth || branding.logoWidth || 220}px` }}/></a>{(footer.description||content.tagline||content.subTagline)&&<p className="footer-tagline">{footer.description||content.tagline||company.tagline}{!footer.description&&content.subTagline&&<><br/><em>{content.subTagline}</em></>}</p>}</div><div className="footer-links"><span>Explore</span>{footerLinks.map((item)=><a key={`${item.label}-${item.url}`} href={item.url}>{item.label}</a>)}</div><div className="footer-links"><span>Connect</span><a href={'tel:'+(footer.phone||phone1).replace(/[^+\d]/g,'')}>{footer.phone||phone1}</a><a href={'tel:'+phone2.replace(/[^+\d]/g,'')}>{phone2}</a><a href={'mailto:'+(footer.email||email)}>{footer.email||email}</a><a href={footer.website|| (website.startsWith('http')?website:'https://'+website)}>{(footer.website||website).replace(/^https?:\/\//,'')}</a><a href="/login">Client Login</a></div></div><div className="shell footer-bottom"><span>{footer.copyright||`© 2026 ${company.companyName||'VSW Solutions'}. All Rights Reserved.`}</span><span>{content.copyrightTagline||'Showcasing our expertise. Delivering excellence.'}</span><span className="footer-legal"><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a></span></div></footer>
 }
 
 function ThankYou() {
@@ -166,6 +167,8 @@ export default function App() {
   if (window.location.pathname === '/forgot-password') return route(<ForgotPassword />)
   if (window.location.pathname === '/change-password') return route(<ChangePassword />)
   if (window.location.pathname === '/account') return route(<UserDashboard />)
+  if (window.location.pathname === '/privacy') return route(<Legal page="privacy" />)
+  if (window.location.pathname === '/terms') return route(<Legal page="terms" />)
   if (window.location.pathname === '/thank-you' || window.location.hash === '#thank-you') return <ThankYou />
   const isThemePreview = new URLSearchParams(window.location.search).get('themePreview') === 'admin'
   const appRef = useRef(null)
