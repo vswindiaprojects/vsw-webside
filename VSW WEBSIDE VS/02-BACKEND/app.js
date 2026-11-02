@@ -17,6 +17,7 @@ import { query } from './config/db.js'
 import { errorHandler, notFound } from './middleware/errors-mysql.js'
 
 const app = express()
+app.set('trust proxy', 1)
 const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:5173').split(',').map((origin) => origin.trim())
 const corsOptions = {
   origin(origin, callback) {
