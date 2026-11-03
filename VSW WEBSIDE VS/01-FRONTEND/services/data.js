@@ -39,18 +39,19 @@ const projectVisuals = {
   'Collective ABFRL': ['earlier-projects/collective-abfrl', 'Premium fashion retail interior'],
   'AIR INDIA': ['earlier-projects/air-india', 'Airport terminal interior'],
   '7 APPLE': ['earlier-projects/7-apple', 'Hospitality resort architecture'],
+  'Vidya Niketan School': ['earlier-projects/vidya-niketan', 'School building interior'],
 }
 
 const projectRecords = [
   ['Navi Mumbai International Airport', 'Navi Mumbai', 'Quantity surveying services – Billing', 'Quantity Surveying / Billing', 'Recent'],
-  ['Google Data Centre', 'Mumbai', 'Quantity surveying services – Billing', 'Quantity Surveying / Billing', 'Recent'],
+  ['Google Data Centre', 'Mumbai', 'Billing', 'Quantity Surveying / Billing', 'Recent'],
   ['Microsoft Data Centre', 'Pune', 'Quantity surveying services – Billing', 'Quantity Surveying / Billing', 'Recent'],
   ['TCS Project', 'Pune', 'Quantity surveying services – Billing', 'Quantity Surveying / Billing', 'Recent'],
   ['Lodha Luxuria', 'Lower Parel, Mumbai', 'Project Management and Billing', 'Project Management', 'Recent'],
   ['Godrej Horizon', 'Wadala, Mumbai', 'Project Management and Billing', 'Project Management', 'Recent'],
   ['Piramal Aranya', 'Byculla, Mumbai', 'Quantity surveying services – Billing', 'Quantity Surveying / Billing', 'Recent'],
   ['Jio World Drive', 'BKC', 'Quantity surveying services – Billing', 'Quantity Surveying / Billing', 'Recent'],
-  ['Varanasi International Cricket Stadium', 'Varanasi', 'Designing', 'Designing', 'Recent'],
+  ['Varanasi International Cricket Stadium', 'Varanasi', 'Billing', 'Quantity Surveying / Billing', 'Recent'],
   ['D. Y. Patil College Hall', 'Nerul', 'Turnkey Solution', 'Turnkey Solutions', 'Recent'],
   ['Vandana Theater', 'Thane', 'Turnkey Solution', 'Turnkey Solutions', 'Recent'],
   ['Goa All India Radio Hall (Akashvani)', 'Goa', 'Turnkey Solution', 'Turnkey Solutions', 'Recent'],
@@ -66,12 +67,13 @@ const projectRecords = [
   ['Lions Club – Chembur – Hospital', 'Chembur', 'Project Management', 'Project Management', 'Recent'],
   ['Apex Kidney Care – Dialysis Centres', 'Not specified', 'Project Management', 'Project Management', 'Recent'],
   ['Samsung', 'Noida, Delhi', 'Quantity surveying services – Billing', 'Quantity Surveying / Billing', 'Earlier'],
-  ['WOOD KRAFT', 'Gurugram, Delhi', 'Scope not specified in source', 'Earlier Projects', 'Earlier'],
-  ['We Work', 'Kharadi, Pune', 'Scope not specified in source', 'Earlier Projects', 'Earlier'],
-  ['Hotel Transit, GMR Airport', 'Hyderabad', 'Scope not specified in source', 'Earlier Projects', 'Earlier'],
-  ['Collective ABFRL', 'Santacruz, Mumbai', 'Scope not specified in source', 'Earlier Projects', 'Earlier'],
-  ['AIR INDIA', 'Noida, Delhi', 'Scope not specified in source', 'Earlier Projects', 'Earlier'],
-  ['7 APPLE', 'Nashik', 'Scope not specified in source', 'Earlier Projects', 'Earlier'],
+  ['WOOD KRAFT', 'Gurugram, Delhi', 'Billing', 'Earlier Projects', 'Earlier'],
+  ['We Work', 'Kharadi, Pune', 'Billing', 'Earlier Projects', 'Earlier'],
+  ['Hotel Transit, GMR Airport', 'Hyderabad', 'Project Management + Billing', 'Earlier Projects', 'Earlier'],
+  ['Collective ABFRL', 'Santacruz, Mumbai', 'Project Management', 'Earlier Projects', 'Earlier'],
+  ['AIR INDIA', 'Noida, Delhi', 'Billing', 'Earlier Projects', 'Earlier'],
+  ['7 APPLE', 'Nashik', 'Billing', 'Earlier Projects', 'Earlier'],
+  ['Vidya Niketan School', 'Dombivali, Mumbai', 'Designing', 'Earlier Projects', 'Earlier'],
 ]
 
 export const projects = projectRecords.map(([name, location, scope, category, status], index) => {
