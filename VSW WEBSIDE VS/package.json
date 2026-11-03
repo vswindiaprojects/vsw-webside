@@ -17,6 +17,7 @@
     "@vitejs/plugin-react": "^4.3.4",
     "gsap": "latest",
     "lucide-react": "latest",
+    "nodemailer": "^6.9.16",
     "react": "latest",
     "react-dom": "latest",
     "tailwindcss": "^3.4.17",
