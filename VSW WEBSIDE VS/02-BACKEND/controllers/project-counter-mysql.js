@@ -55,7 +55,7 @@ export const defaultProjectCounterConfig = () => ({
   heading: 'Delivering with certainty.',
   subheading: 'A growing record of projects delivered across India with accurate data, coordinated execution and dependable follow-through.',
   animationEnabled: true,
-  loop: true,
+  loop: false,
   duration: 2400,
   pause: 2600,
   backgroundStyle: 'navy',
@@ -66,9 +66,11 @@ export const defaultProjectCounterConfig = () => ({
   hoverEffect: true,
   mainStat: { value: 300, suffix: '+', label: 'Projects Completed' },
   stats: [
-    { id: 'clients', value: 0, suffix: '+', label: 'Clients Served', enabled: false },
-    { id: 'years', value: 0, suffix: '+', label: 'Years of Experience', enabled: false },
-    { id: 'cities', value: 0, suffix: '+', label: 'Cities Covered', enabled: false },
+    { id: 'surveying', value: 40, suffix: '', label: 'Site Surveying & Documentation', enabled: true },
+    { id: 'design', value: 3, suffix: '', label: 'Design & Space Solutions', enabled: true },
+    { id: 'project-management', value: 35, suffix: '', label: 'Project Management', enabled: true },
+    { id: 'turnkey', value: 55, suffix: '', label: 'Turnkey Project Solutions', enabled: true },
+    { id: 'billing', value: 167, suffix: '', label: 'Contracts & Billing', enabled: true },
   ],
 })
 

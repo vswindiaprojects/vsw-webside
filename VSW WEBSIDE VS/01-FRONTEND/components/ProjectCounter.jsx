@@ -8,8 +8,8 @@ export const DEFAULT_SETTINGS = {
   subtitle:
     'A growing record of projects delivered across India with accurate data, coordinated execution and dependable follow-through.',
   primary: { value: 300, suffix: '+', label: 'Projects Completed' },
-  stats: [], // e.g. { value: 150, suffix: '+', label: 'Clients Served' } (max 6)
-  loop: true, // continuous looping ON/OFF
+  stats: [], // e.g. { value: 150, suffix: '', label: 'Project Management' } (max 6)
+  loop: false, // continuous looping ON/OFF
   duration: 2600, // ms to count 0 -> value
   pause: 2200, // ms to hold the final value before looping
   colors: { accent: '#c9a45c', bg: '#07131f', text: '#ffffff' },

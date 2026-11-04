@@ -260,7 +260,7 @@ export default function ProjectCounterAdmin({ data, token, admin, onRefresh }) {
                 <div className="admin-edit-grid">
                   <label className="admin-field"><span>Final value</span><input type="number" min="0" max="1000000" step="1" value={stat.value ?? 0} onChange={(event) => updateStat(stat.id, { value: clamp(event.target.value, 0, 1000000, 0) })} /></label>
                   <label className="admin-field"><span>Suffix</span><input maxLength="4" value={stat.suffix ?? ''} onChange={(event) => updateStat(stat.id, { suffix: event.target.value })} placeholder="+" /></label>
-                  <label className="admin-field admin-field-wide"><span>Label</span><input maxLength="60" value={stat.label ?? ''} onChange={(event) => updateStat(stat.id, { label: event.target.value })} placeholder="Clients Served" /></label>
+                  <label className="admin-field admin-field-wide"><span>Label</span><input maxLength="60" value={stat.label ?? ''} onChange={(event) => updateStat(stat.id, { label: event.target.value })} placeholder="Project Management" /></label>
                 </div>
                 <div className="counter-admin-stat-actions">
                   <label className="counter-admin-visible"><input type="checkbox" checked={stat.enabled !== false} onChange={(event) => updateStat(stat.id, { enabled: event.target.checked })} /> Show on website</label>
@@ -281,12 +281,12 @@ export default function ProjectCounterAdmin({ data, token, admin, onRefresh }) {
         <div className="counter-admin-section-head">
           <div>
             <h3>Add an additional statistic</h3>
-            <p>For example: Clients Served, Years of Experience, or Cities Covered.</p>
+            <p>For example: Contracts &amp; Billing, Project Management, or Turnkey Project Solutions.</p>
           </div>
           <Plus size={20} />
         </div>
         <div className="admin-edit-grid">
-          <label className="admin-field"><span>Label</span><input maxLength="60" value={newStat.label} onChange={(event) => setNewStat((current) => ({ ...current, label: event.target.value }))} placeholder="Clients Served" required /></label>
+          <label className="admin-field"><span>Label</span><input maxLength="60" value={newStat.label} onChange={(event) => setNewStat((current) => ({ ...current, label: event.target.value }))} placeholder="Project Management" required /></label>
           <label className="admin-field"><span>Final value</span><input type="number" min="0" max="1000000" step="1" value={newStat.value} onChange={(event) => setNewStat((current) => ({ ...current, value: event.target.value }))} placeholder="120" /></label>
           <label className="admin-field"><span>Suffix</span><input maxLength="4" value={newStat.suffix} onChange={(event) => setNewStat((current) => ({ ...current, suffix: event.target.value }))} placeholder="+" /></label>
         </div>
