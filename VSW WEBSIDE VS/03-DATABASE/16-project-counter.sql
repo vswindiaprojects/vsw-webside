@@ -39,7 +39,10 @@ VALUES (
       {"id": "design", "value": 3, "suffix": "", "label": "Design & Space Solutions", "enabled": true},
       {"id": "project-management", "value": 35, "suffix": "", "label": "Project Management", "enabled": true},
       {"id": "turnkey", "value": 55, "suffix": "", "label": "Turnkey Project Solutions", "enabled": true},
-      {"id": "billing", "value": 167, "suffix": "", "label": "Contracts & Billing", "enabled": true}
+      {"id": "billing", "value": 167, "suffix": "", "label": "Contracts & Billing", "enabled": true},
+      {"id": "clients", "value": 150, "suffix": "+", "label": "Clients Served", "enabled": true},
+      {"id": "years", "value": 12, "suffix": "+", "label": "Years of Experience", "enabled": true},
+      {"id": "cities", "value": 20, "suffix": "+", "label": "Cities Covered", "enabled": true}
     ]
   }',
   '{
@@ -63,7 +66,10 @@ VALUES (
       {"id": "design", "value": 3, "suffix": "", "label": "Design & Space Solutions", "enabled": true},
       {"id": "project-management", "value": 35, "suffix": "", "label": "Project Management", "enabled": true},
       {"id": "turnkey", "value": 55, "suffix": "", "label": "Turnkey Project Solutions", "enabled": true},
-      {"id": "billing", "value": 167, "suffix": "", "label": "Contracts & Billing", "enabled": true}
+      {"id": "billing", "value": 167, "suffix": "", "label": "Contracts & Billing", "enabled": true},
+      {"id": "clients", "value": 150, "suffix": "+", "label": "Clients Served", "enabled": true},
+      {"id": "years", "value": 12, "suffix": "+", "label": "Years of Experience", "enabled": true},
+      {"id": "cities", "value": 20, "suffix": "+", "label": "Cities Covered", "enabled": true}
     ]
   }',
   1,

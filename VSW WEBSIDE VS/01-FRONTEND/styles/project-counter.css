@@ -234,6 +234,11 @@
   transition: transform 0.4s var(--pc-ease), border-color 0.4s, background 0.4s;
 }
 
+/* Eight metrics read best as an even 4 x 2 wall instead of a 6 + 2 split. */
+.pc__stats-dense {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .pc-hover .pc__stat:hover {
   transform: translate3d(0, -4px, 0);
   border-color: color-mix(in srgb, var(--pc-accent) 55%, transparent);
@@ -330,6 +335,10 @@
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 12px;
     margin-top: 34px;
+  }
+
+  .pc__stats-dense {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

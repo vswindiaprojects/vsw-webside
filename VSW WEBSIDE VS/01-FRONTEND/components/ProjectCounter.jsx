@@ -8,7 +8,7 @@ export const DEFAULT_SETTINGS = {
   subtitle:
     'A growing record of projects delivered across India with accurate data, coordinated execution and dependable follow-through.',
   primary: { value: 300, suffix: '+', label: 'Projects Completed' },
-  stats: [], // e.g. { value: 150, suffix: '', label: 'Project Management' } (max 6)
+  stats: [], // e.g. { value: 150, suffix: '+', label: 'Clients Served' } (max 8)
   loop: false, // continuous looping ON/OFF
   duration: 2600, // ms to count 0 -> value
   pause: 2200, // ms to hold the final value before looping
@@ -121,7 +121,7 @@ function normalize(s = {}) {
     primary: s.mainStat ? item(s.mainStat, d.primary) : item(s.primary, d.primary),
     stats: (Array.isArray(s.stats) ? s.stats : [])
       .filter((stat) => stat && stat.enabled !== false && String(stat.label || '').trim())
-      .slice(0, 6)
+      .slice(0, 8)
       .map((stat, index) => ({
         id: String(stat.id || `stat-${index + 1}`),
         ...item(stat, { value: 0, suffix: '+', label: '' }),
@@ -335,7 +335,7 @@ export default function ProjectCounter({
         </div>
 
         {cfg.stats.length > 0 && (
-          <div className="pc__stats">
+          <div className={`pc__stats${cfg.stats.length > 6 ? ' pc__stats-dense' : ''}`}>
             {cfg.stats.map((stat, index) => (
               <div className="pc__stat" key={stat.id}>
                 <div

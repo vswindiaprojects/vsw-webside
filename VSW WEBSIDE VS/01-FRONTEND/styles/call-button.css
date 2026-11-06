@@ -1,0 +1,96 @@
+/* Floating call button — always one tap away from a phone call. */
+.call-fab {
+  position: fixed;
+  right: clamp(14px, 3vw, 28px);
+  bottom: clamp(14px, 3vw, 28px);
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px 10px 10px;
+  border-radius: 999px;
+  background: var(--gold, #c2a36b);
+  color: var(--navy, #07131f);
+  text-decoration: none;
+  box-shadow: 0 14px 34px rgba(7, 19, 31, .28);
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+  animation: call-fab-in .5s ease both;
+}
+
+.call-fab:hover,
+.call-fab:focus-visible {
+  background: #d4b57c;
+  transform: translateY(-3px);
+  box-shadow: 0 18px 42px rgba(7, 19, 31, .34);
+}
+
+.call-fab:focus-visible {
+  outline: 2px solid var(--navy, #07131f);
+  outline-offset: 3px;
+}
+
+.call-fab__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--navy, #07131f);
+  color: #fff;
+  animation: call-fab-pulse 2.6s ease-in-out infinite;
+}
+
+.call-fab__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.call-fab__text small {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  opacity: .7;
+}
+
+.call-fab__text strong {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .01em;
+  white-space: nowrap;
+}
+
+@keyframes call-fab-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes call-fab-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(7, 19, 31, .35); }
+  55% { box-shadow: 0 0 0 9px rgba(7, 19, 31, 0); }
+}
+
+@media (max-width: 560px) {
+  .call-fab {
+    padding: 8px;
+    gap: 0;
+  }
+
+  .call-fab__text {
+    display: none;
+  }
+
+  .call-fab__icon {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .call-fab,
+  .call-fab__icon {
+    animation: none;
+  }
+}

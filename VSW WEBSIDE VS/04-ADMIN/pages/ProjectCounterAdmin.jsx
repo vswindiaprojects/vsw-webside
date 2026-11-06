@@ -80,8 +80,8 @@ export default function ProjectCounterAdmin({ data, token, admin, onRefresh }) {
       setProblem('Enter a label before adding a statistic.')
       return
     }
-    if (stats.length >= 6) {
-      setProblem('You can add up to six additional statistics.')
+    if (stats.length >= 8) {
+      setProblem('You can add up to eight additional statistics.')
       return
     }
     change({
@@ -290,7 +290,7 @@ export default function ProjectCounterAdmin({ data, token, admin, onRefresh }) {
           <label className="admin-field"><span>Final value</span><input type="number" min="0" max="1000000" step="1" value={newStat.value} onChange={(event) => setNewStat((current) => ({ ...current, value: event.target.value }))} placeholder="120" /></label>
           <label className="admin-field"><span>Suffix</span><input maxLength="4" value={newStat.suffix} onChange={(event) => setNewStat((current) => ({ ...current, suffix: event.target.value }))} placeholder="+" /></label>
         </div>
-        <button type="submit" disabled={busy || !newStat.label.trim() || stats.length >= 6}><Plus size={15} /> Add statistic to draft</button>
+        <button type="submit" disabled={busy || !newStat.label.trim() || stats.length >= 8}><Plus size={15} /> Add statistic to draft</button>
         <button type="button" className="admin-link-button" onClick={() => { setNewStat(emptyNewStat()); setProblem('') }}><RefreshCw size={14} /> Clear</button>
       </form>
     </div>

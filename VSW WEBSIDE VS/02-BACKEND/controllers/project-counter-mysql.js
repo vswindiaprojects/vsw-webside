@@ -1,6 +1,6 @@
 import { query } from '../config/db.js'
 
-const MAX_STATS = 6
+const MAX_STATS = 8
 const cleanText = (value, max) => String(value ?? '').replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, max)
 
 const booleanValue = (value, fallback) => {
@@ -71,6 +71,9 @@ export const defaultProjectCounterConfig = () => ({
     { id: 'project-management', value: 35, suffix: '', label: 'Project Management', enabled: true },
     { id: 'turnkey', value: 55, suffix: '', label: 'Turnkey Project Solutions', enabled: true },
     { id: 'billing', value: 167, suffix: '', label: 'Contracts & Billing', enabled: true },
+    { id: 'clients', value: 150, suffix: '+', label: 'Clients Served', enabled: true },
+    { id: 'years', value: 12, suffix: '+', label: 'Years of Experience', enabled: true },
+    { id: 'cities', value: 20, suffix: '+', label: 'Cities Covered', enabled: true },
   ],
 })
 

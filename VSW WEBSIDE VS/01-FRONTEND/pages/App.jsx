@@ -8,6 +8,7 @@ import ContactInquiry from '../components/ContactInquiry'
 import ClientLogoMarquee from '../components/ClientLogoMarquee'
 import AllClients from '../components/AllClients'
 import ProjectCounter from '../components/ProjectCounter'
+import CallButton from '../components/CallButton'
 import { useAuth } from '../services/AuthContext'
 
 const Admin = lazy(() => import('../../04-ADMIN/pages/Admin'))
@@ -377,5 +378,5 @@ export default function App() {
   const homeDraft = !isThemePreview && theme.pages?.home?.status === 'draft'
   const logoBoardAfter = sections.some((section) => section.id === 'strengths') ? 'strengths' : 'hero'
   const counterAfter = sections.some((section) => section.id === 'projects') ? 'projects' : (sections[0]?.id || null)
-  return <div ref={appRef} className={isThemePreview ? 'theme-preview-mode' : undefined} style={themeStyle}><Navbar theme={theme}/><main>{homeDraft ? <div className="theme-unpublished-page">This page is not published.</div> : sections.map((section) => <Fragment key={section.id}><div id={theme.pages?.[section.id]?.slug !== section.id ? theme.pages?.[section.id]?.slug : undefined} data-theme-section={section.id} className="theme-page-section">{sectionComponents[section.id]}</div>{section.id === logoBoardAfter && clientLogos && <ClientLogoMarquee config={clientLogos}/>}{section.id === logoBoardAfter && clientLogos && <AllClients config={clientLogos}/>}{section.id === counterAfter && projectCounter && <ProjectCounter config={projectCounter}/>}</Fragment>)}</main><Footer company={company} content={{...(websiteContent.footer?.main||{}),...(theme.footer||{})}} theme={theme}/></div>
+  return <div ref={appRef} className={isThemePreview ? 'theme-preview-mode' : undefined} style={themeStyle}><Navbar theme={theme}/><main>{homeDraft ? <div className="theme-unpublished-page">This page is not published.</div> : sections.map((section) => <Fragment key={section.id}><div id={theme.pages?.[section.id]?.slug !== section.id ? theme.pages?.[section.id]?.slug : undefined} data-theme-section={section.id} className="theme-page-section">{sectionComponents[section.id]}</div>{section.id === logoBoardAfter && clientLogos && <ClientLogoMarquee config={clientLogos}/>}{section.id === logoBoardAfter && clientLogos && <AllClients config={clientLogos}/>}{section.id === counterAfter && projectCounter && <ProjectCounter config={projectCounter}/>}</Fragment>)}</main><Footer company={company} content={{...(websiteContent.footer?.main||{}),...(theme.footer||{})}} theme={theme}/><CallButton phone={company.phone2 || '+91 91365 14351'}/></div>
 }
