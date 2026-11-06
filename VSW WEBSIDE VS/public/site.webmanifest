@@ -1,0 +1,13 @@
+{
+  "name": "VSW Solutions",
+  "short_name": "VSW",
+  "description": "Project management, site surveying, design, turnkey and contracts & billing solutions.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07131f",
+  "theme_color": "#07131f",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

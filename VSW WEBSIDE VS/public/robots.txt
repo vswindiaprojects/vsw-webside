@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /login
+Disallow: /account
+
+Sitemap: https://vswsolution.in/sitemap.xml
