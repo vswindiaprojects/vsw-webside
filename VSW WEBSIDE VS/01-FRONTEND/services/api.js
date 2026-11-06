@@ -35,7 +35,7 @@ const request = async (path, options = {}) => {
 export const api = {
   projects: () => request('/projects?limit=100'),
   services: () => request('/services'),
-  company: () => request('/settings'),
+  company: () => request(`/settings?ts=${Date.now()}`),
   publicContent: () => request('/content'),
   publicTheme: () => request('/content/theme'),
   publicClientLogos: () => request('/content/clients'),

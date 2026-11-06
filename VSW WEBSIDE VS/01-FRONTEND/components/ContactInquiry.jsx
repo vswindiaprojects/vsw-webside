@@ -13,7 +13,13 @@ export default function ContactInquiry({ services, company, content = {} }) {
   const submitting = useRef(false)
   const headOfficeText = company.headOffice || 'Shop No. 6, Makkesh Apartment Co-op. HSG. SOC. LTD., Building No. 1 & 2, Near D-Mart Ready, Navghar Road, Bhayander East, Maharashtra, India.'
   const branchOfficeText = company.branchOffice || 'Shop No. 1, Mauli Chhaya CHS, Konkani Pada, Kurar Village, Malad (East), Mumbai - 400097, Maharashtra, India.'
+  const branchOffices = branchOfficeText.split(/\r?\n/).map((address) => address.trim()).filter(Boolean)
   const mapQuery = (text) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(text)}`
+  const formatPhone = (value, fallback) => {
+    const raw = String(value || fallback).replace(/\D/g, '')
+    const local = raw.length === 12 && raw.startsWith('91') ? raw.slice(2) : raw
+    return local.length === 10 ? `+91 ${local.slice(0, 5)} ${local.slice(5)}` : String(value || fallback)
+  }
   const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(headOfficeText)}&z=15&output=embed`
   const authLink = (path) => `${path}?returnTo=${encodeURIComponent('/#contact')}`
   const submit = async (event) => {
@@ -84,7 +90,7 @@ export default function ContactInquiry({ services, company, content = {} }) {
           </form><div className="contact-message-switch"><button type="button" onClick={() => { setStatus(''); setMessageMode(false) }}>Back to project inquiry</button></div></>}
         </div>
       </div>
-      <div className="shell offices"><div className="office"><span>Head Office</span><a href={company.googleMapUrl || mapQuery(headOfficeText)} target="_blank" rel="noreferrer"><p>{headOfficeText}</p></a></div><div className="office"><span>Branch Office</span><a href={mapQuery(branchOfficeText)} target="_blank" rel="noreferrer"><p>{branchOfficeText}</p></a></div><div className="office"><span>Get in touch</span><p>Mobile: {company.phone1 || '+91 98672 67499'}<br />{company.phone2 || '+91 91365 14351'}{company.officeHours ? <><br />{company.officeHours}</> : null}</p><a href={`mailto:${company.email || 'vswindiaprojects@gmail.com'}`}>{company.email || 'vswindiaprojects@gmail.com'}</a><a href={`https://${(company.website || 'vswsolutions.com').replace(/^https?:\/\//, '')}`} target="_blank" rel="noreferrer">{(company.website || 'https://vswsolutions.com').replace(/^https?:\/\//, '')}</a></div></div>
+      <div className="shell offices"><div className="office"><span>Head Office</span><a href={company.googleMapUrl || mapQuery(headOfficeText)} target="_blank" rel="noreferrer"><p>{headOfficeText}</p></a></div>{branchOffices.map((address, index) => <div className="office" key={address}><span>{branchOffices.length > 1 ? `Branch Office ${index + 1}` : 'Branch Office'}</span><a href={mapQuery(address)} target="_blank" rel="noreferrer"><p>{address}</p></a></div>)}<div className="office"><span>Get in touch</span><p>Mobile: {formatPhone(company.phone1, '+91 98672 67499')}<br />{formatPhone(company.phone2, '+91 91365 14351')}{company.officeHours ? <><br />{company.officeHours}</> : null}</p><a href={`mailto:${company.email || 'vswindiaprojects@gmail.com'}`}>{company.email || 'vswindiaprojects@gmail.com'}</a><a href={`https://${(company.website || 'vswsolutions.com').replace(/^https?:\/\//, '')}`} target="_blank" rel="noreferrer">{(company.website || 'https://vswsolutions.com').replace(/^https?:\/\//, '')}</a></div></div>
       <div className="map-wrap" aria-label="VSW Solutions head office location"><iframe title="Map showing the VSW Solutions head office" src={mapEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" /></div>
     </section>
   </>
