@@ -48,14 +48,14 @@ const projectVisuals = {
 }
 
 const projectRecords = [
-  ['Navi Mumbai International Airport', 'Navi Mumbai', 'Quantity surveying services – Billing', 'Quantity Surveying / Billing', 'Recent'],
+  ['Navi Mumbai International Airport', 'Navi Mumbai', 'Billing', 'Quantity Surveying / Billing', 'Recent'],
   ['Google Data Centre', 'Mumbai', 'Billing', 'Quantity Surveying / Billing', 'Recent'],
   ['Microsoft Data Centre', 'Pune', 'Quantity surveying services – Billing', 'Quantity Surveying / Billing', 'Recent'],
   ['TCS Project', 'Pune', 'Quantity surveying services – Billing', 'Quantity Surveying / Billing', 'Recent'],
-  ['Lodha Luxuria', 'Lower Parel, Mumbai', 'Project Management and Billing', 'Project Management', 'Recent'],
-  ['Godrej Horizon', 'Wadala, Mumbai', 'Project Management and Billing', 'Project Management', 'Recent'],
-  ['Piramal Aranya', 'Byculla, Mumbai', 'Quantity surveying services – Billing', 'Quantity Surveying / Billing', 'Recent'],
-  ['Jio World Drive', 'BKC', 'Quantity surveying services – Billing', 'Quantity Surveying / Billing', 'Recent'],
+  ['Lodha Luxuria', 'Lower Parel, Mumbai', 'Billing', 'Quantity Surveying / Billing', 'Recent'],
+  ['Godrej Horizon', 'Wadala, Mumbai', 'Billing', 'Quantity Surveying / Billing', 'Recent'],
+  ['Piramal Aranya', 'Byculla, Mumbai', 'Billing', 'Quantity Surveying / Billing', 'Recent'],
+  ['Jio World Drive', 'BKC', 'Billing', 'Quantity Surveying / Billing', 'Recent'],
   ['Varanasi International Cricket Stadium', 'Varanasi', 'Billing', 'Quantity Surveying / Billing', 'Recent'],
   ['D. Y. Patil College Hall', 'Nerul', 'Turnkey Solution', 'Turnkey Solutions', 'Recent'],
   ['Vandana Theater', 'Thane', 'Turnkey Solution', 'Turnkey Solutions', 'Recent'],
