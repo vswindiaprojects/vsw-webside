@@ -13,6 +13,7 @@ import users from './routes/users-mysql.js'
 import admin from './routes/admin-mysql.js'
 import content from './routes/content-mysql.js'
 import counterSettings from './routes/counter-settings.js'
+import reviews from './routes/reviews-mysql.js'
 import { query } from './config/db.js'
 import { errorHandler, notFound } from './middleware/errors-mysql.js'
 
@@ -53,6 +54,7 @@ app.use('/api/users', users)
 app.use('/api/admin', admin)
 app.use('/api/content', content)
 app.use('/api/counter-settings', counterSettings)
+app.use('/api/reviews', reviews)
 app.use('/uploads', express.static(path.resolve(process.env.UPLOADS_DIR||path.join(process.cwd(),'uploads'))))
 app.use(notFound)
 app.use(errorHandler)
