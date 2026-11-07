@@ -9,7 +9,7 @@ import ClientLogoMarquee from '../components/ClientLogoMarquee'
 import AllClients from '../components/AllClients'
 import ProjectCounter from '../components/ProjectCounter'
 import CallButton from '../components/CallButton'
-import Reviews from '../components/Reviews'
+import ReviewButton from '../components/ReviewButton'
 import { useAuth } from '../services/AuthContext'
 
 const Admin = lazy(() => import('../../04-ADMIN/pages/Admin'))
@@ -25,7 +25,7 @@ const route = (element) => <Suspense fallback={routeFallback}>{element}</Suspens
 
 gsap.registerPlugin(ScrollTrigger)
 
-const navItems = [['About', 'about'], ['Services', 'services'], ['Projects', 'projects'], ['Workflow', 'workflow'], ['Why VSW', 'why-vsw'], ['Reviews', 'reviews'], ['Contact', 'contact']]
+const navItems = [['About', 'about'], ['Services', 'services'], ['Projects', 'projects'], ['Workflow', 'workflow'], ['Why VSW', 'why-vsw'], ['Contact', 'contact']]
 const categories = projectCategories
 const normalizeProjectName = (name = '') => name.toLowerCase().replace(/[^a-z0-9]/g, '')
 const projectAliases = { tcs: 'TCS Project', wework: 'We Work', dypatilcollege: 'D. Y. Patil College Hall', hiveicon67: 'Hive Icon 67, Office space', newgovernmentmedicalcollege: 'New Government Medical College Hall', kanakiyahighschool: 'Kanakiya High School Hall', lionsclubchemberhospital: 'Lions Club – Chembur – Hospital' }
@@ -379,5 +379,5 @@ export default function App() {
   const homeDraft = !isThemePreview && theme.pages?.home?.status === 'draft'
   const logoBoardAfter = sections.some((section) => section.id === 'strengths') ? 'strengths' : 'hero'
   const counterAfter = sections.some((section) => section.id === 'projects') ? 'projects' : (sections[0]?.id || null)
-  return <div ref={appRef} className={isThemePreview ? 'theme-preview-mode' : undefined} style={themeStyle}><Navbar theme={theme}/><main>{homeDraft ? <div className="theme-unpublished-page">This page is not published.</div> : sections.map((section) => <Fragment key={section.id}>{section.id === 'contact' && <Reviews/>}<div id={theme.pages?.[section.id]?.slug !== section.id ? theme.pages?.[section.id]?.slug : undefined} data-theme-section={section.id} className="theme-page-section">{sectionComponents[section.id]}</div>{section.id === logoBoardAfter && clientLogos && <ClientLogoMarquee config={clientLogos}/>}{section.id === logoBoardAfter && clientLogos && <AllClients config={clientLogos}/>}{section.id === counterAfter && projectCounter && <ProjectCounter config={projectCounter}/>}</Fragment>)}</main><Footer company={company} content={{...(websiteContent.footer?.main||{}),...(theme.footer||{})}} theme={theme}/><CallButton phone={company.phone2 || '+91 91365 14351'}/></div>
+  return <div ref={appRef} className={isThemePreview ? 'theme-preview-mode' : undefined} style={themeStyle}><Navbar theme={theme}/><main>{homeDraft ? <div className="theme-unpublished-page">This page is not published.</div> : sections.map((section) => <Fragment key={section.id}><div id={theme.pages?.[section.id]?.slug !== section.id ? theme.pages?.[section.id]?.slug : undefined} data-theme-section={section.id} className="theme-page-section">{sectionComponents[section.id]}</div>{section.id === logoBoardAfter && clientLogos && <ClientLogoMarquee config={clientLogos}/>}{section.id === logoBoardAfter && clientLogos && <AllClients config={clientLogos}/>}{section.id === counterAfter && projectCounter && <ProjectCounter config={projectCounter}/>}</Fragment>)}</main><Footer company={company} content={{...(websiteContent.footer?.main||{}),...(theme.footer||{})}} theme={theme}/><CallButton phone={company.phone2 || '+91 91365 14351'}/><ReviewButton/></div>
 }
