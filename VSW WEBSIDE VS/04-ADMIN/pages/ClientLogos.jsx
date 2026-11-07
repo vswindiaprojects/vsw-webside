@@ -263,7 +263,7 @@ export default function ClientLogos({ data, token, admin, onRefresh }) {
         </div>
         <ClientLogoMarquee config={config} preview />
         <div className="client-admin-directory">
-          <p className="client-admin-directory-head">Below the strip — the full “Our Clients” section on the website</p>
+          <p className="client-admin-directory-head">Below the strip — the full “Our Brands” section on the website</p>
           <AllClients config={config} />
         </div>
       </section>
@@ -291,7 +291,7 @@ export default function ClientLogos({ data, token, admin, onRefresh }) {
             <label><input type="checkbox" checked={config.animationEnabled !== false} onChange={(event) => updateSetting('animationEnabled', event.target.checked)} /> Enable the moving animation</label>
             <label><input type="checkbox" checked={config.pauseOnHover !== false} onChange={(event) => updateSetting('pauseOnHover', event.target.checked)} /> Pause when the pointer is over the board</label>
             <label><input type="checkbox" checked={config.grayscale === true} onChange={(event) => updateSetting('grayscale', event.target.checked)} /> Show logos in greyscale (optional)</label>
-            <label><input type="checkbox" checked={config.showAllClients !== false} onChange={(event) => updateSetting('showAllClients', event.target.checked)} /> Show the full "All our clients" section before Contact</label>
+            <label><input type="checkbox" checked={config.showAllClients !== false} onChange={(event) => updateSetting('showAllClients', event.target.checked)} /> Show the full "Our Brands" section before Contact</label>
           </div>
         </div>
         <button type="submit" disabled={busy || !dirty}>{busy ? 'Saving…' : 'Save draft'}</button>
@@ -301,7 +301,7 @@ export default function ClientLogos({ data, token, admin, onRefresh }) {
         <div className="client-admin-section-head">
           <div>
             <h3>Client logos <span>({config.logos.length})</span></h3>
-            <p>Use the arrows to change the display order. Disabled logos stay in the draft but are hidden on the website. “Top strip” picks the shortlist shown in “Trusted by leading brands”; every enabled client stays in the full “Our Clients” list below.</p>
+            <p>Use the arrows to change the display order. Disabled logos stay in the draft but are hidden on the website. “Top strip” picks the shortlist shown in “Trusted by leading clients”; every enabled client stays in the full “Our Brands” list below.</p>
           </div>
           {placeholderCount > 0 && <button type="button" className="admin-link-button" onClick={removePlaceholders}>Remove {placeholderCount} development placeholder{placeholderCount === 1 ? '' : 's'}</button>}
         </div>
