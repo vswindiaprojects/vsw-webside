@@ -64,7 +64,7 @@ export const defaultProjectCounterConfig = () => ({
   accentColor: '',
   decorativeLines: true,
   hoverEffect: true,
-  mainStat: { value: 300, suffix: '+', label: 'Projects Completed' },
+  mainStat: { value: 314, suffix: '+', label: 'Projects Completed' },
   stats: [
     { id: 'surveying', value: 40, suffix: '', label: 'Site Surveying & Documentation', enabled: true },
     { id: 'design', value: 3, suffix: '', label: 'Design & Space Solutions', enabled: true },

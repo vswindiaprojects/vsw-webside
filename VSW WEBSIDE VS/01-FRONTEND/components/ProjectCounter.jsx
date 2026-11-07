@@ -7,7 +7,7 @@ export const DEFAULT_SETTINGS = {
   title: 'Delivering with certainty.',
   subtitle:
     'A growing record of projects delivered across India with accurate data, coordinated execution and dependable follow-through.',
-  primary: { value: 300, suffix: '+', label: 'Projects Completed' },
+  primary: { value: 314, suffix: '+', label: 'Projects Completed' },
   stats: [], // e.g. { value: 150, suffix: '+', label: 'Clients Served' } (max 8)
   loop: false, // continuous looping ON/OFF
   duration: 2600, // ms to count 0 -> value
@@ -16,7 +16,7 @@ export const DEFAULT_SETTINGS = {
 }
 
 const RING = 1131 // circumference of r=180
-const FADE = 350 // soft fade at loop edges so 300 -> 0 never "snaps"
+const FADE = 350 // soft fade at loop edges so the count -> 0 never "snaps"
 const ease = (t) => 1 - Math.pow(1 - t, 4) // easeOutQuart
 const num = (n, min, max, d) => (Number.isFinite(+n) ? Math.min(max, Math.max(min, +n)) : d)
 const NUMBER_FORMAT = new Intl.NumberFormat('en-IN')

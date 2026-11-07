@@ -238,7 +238,7 @@ export default function ProjectCounterAdmin({ data, token, admin, onRefresh }) {
           <label className="admin-field"><span>Suffix after the number</span><input maxLength="4" value={config.mainStat?.suffix ?? ''} onChange={(event) => updateMain('suffix', event.target.value)} placeholder="+" /></label>
           <label className="admin-field admin-field-wide"><span>Label under the number</span><input maxLength="60" value={config.mainStat?.label ?? ''} onChange={(event) => updateMain('label', event.target.value)} placeholder="Projects Completed" /></label>
         </div>
-        <p className="counter-admin-hint">Only keep 300 if the company can substantiate that figure. Set the real verified total here.</p>
+        <p className="counter-admin-hint">Only keep a figure the company can substantiate. Set the real verified total here.</p>
       </section>
 
       <section className="counter-admin-stats">
