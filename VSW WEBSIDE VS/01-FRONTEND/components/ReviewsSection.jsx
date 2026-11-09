@@ -62,7 +62,24 @@ export default function ReviewsSection() {
       </div>
 
       {loading ? (
-        <p className="reviews-loading">Loading reviews…</p>
+        <ul className="reviews-grid reviews-grid-loading" aria-busy="true" aria-label="Loading reviews">
+          {[0, 1, 2].map((index) => (
+            <li className="reviews-skeleton-card" key={index}>
+              <span className="skeleton skeleton-icon" />
+              <span className="skeleton skeleton-stars" />
+              <span className="skeleton skeleton-line" />
+              <span className="skeleton skeleton-line" />
+              <span className="skeleton skeleton-line skeleton-line-short" />
+              <div className="reviews-skeleton-author">
+                <span className="skeleton skeleton-avatar" />
+                <div>
+                  <span className="skeleton skeleton-line skeleton-name" />
+                  <span className="skeleton skeleton-line skeleton-meta" />
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
       ) : reviews.length ? (
         <ul className="reviews-grid">
           {reviews.slice(0, 6).map((review) => (

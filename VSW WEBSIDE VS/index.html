@@ -26,9 +26,84 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <title>VSW Solutions | Project Management, Surveying & Turnkey Solutions</title>
+    <style>
+      /* First-paint skeleton shown until the React app mounts. */
+      .boot { min-height: 100vh; background: #f4f6f4; }
+      .boot-bar, .boot-card {
+        display: block;
+        border-radius: 2px;
+        background: linear-gradient(100deg, #e3e9e6 20%, #f1f4f2 34%, #e3e9e6 48%);
+        background-size: 220% 100%;
+        animation: bootShimmer 1.6s linear infinite;
+      }
+      .boot-nav { display: flex; align-items: center; justify-content: space-between; height: 92px; padding: 0 48px; background: #07131f; }
+      .boot-nav .boot-bar { background: linear-gradient(100deg, rgba(255,255,255,.1) 20%, rgba(255,255,255,.2) 34%, rgba(255,255,255,.1) 48%); background-size: 220% 100%; }
+      .boot-logo { width: 150px; height: 30px; }
+      .boot-links { display: flex; align-items: center; gap: 22px; }
+      .boot-links .boot-bar { width: 64px; height: 10px; }
+      .boot-links .boot-btn { width: 124px; height: 38px; }
+      .boot-hero { display: flex; align-items: center; min-height: 560px; padding: 0 48px; background: #07131f; }
+      .boot-hero-inner { display: flex; flex-direction: column; gap: 16px; width: min(1220px, 100%); margin: 0 auto; }
+      .boot-hero .boot-bar { background: linear-gradient(100deg, rgba(255,255,255,.1) 20%, rgba(255,255,255,.2) 34%, rgba(255,255,255,.1) 48%); background-size: 220% 100%; }
+      .boot-eyebrow { width: 190px; height: 10px; }
+      .boot-h1 { width: min(680px, 80%); height: 56px; }
+      .boot-h1-short { width: min(480px, 60%); }
+      .boot-copy { width: min(520px, 70%); height: 12px; }
+      .boot-copy-short { width: min(400px, 58%); }
+      .boot-actions { display: flex; gap: 12px; margin-top: 14px; }
+      .boot-btn { width: 152px; height: 46px; }
+      .boot-btn-ghost { background: transparent; border: 1px solid rgba(255,255,255,.25); }
+      .boot-body { width: min(1220px, 100%); margin: 0 auto; padding: 80px 48px; }
+      .boot-section-title { width: min(420px, 60%); height: 38px; margin-bottom: 14px; }
+      .boot-section-sub { width: min(520px, 70%); height: 12px; margin-bottom: 40px; }
+      .boot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+      .boot-card { height: 270px; }
+      @keyframes bootShimmer { 0% { background-position: 130% 0; } 100% { background-position: -130% 0; } }
+      @media (max-width: 900px) {
+        .boot-nav { height: 76px; padding: 0 24px; }
+        .boot-links { display: none; }
+        .boot-hero { min-height: 480px; padding: 0 24px; }
+        .boot-h1 { height: 38px; }
+        .boot-body { padding: 60px 24px; }
+        .boot-grid { grid-template-columns: 1fr 1fr; }
+      }
+      @media (max-width: 600px) {
+        .boot-grid { grid-template-columns: 1fr; }
+        .boot-card { height: 220px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .boot-bar, .boot-card { animation: none; }
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="boot" aria-hidden="true">
+        <div class="boot-nav">
+          <span class="boot-bar boot-logo"></span>
+          <span class="boot-links">
+            <span class="boot-bar"></span><span class="boot-bar"></span><span class="boot-bar"></span><span class="boot-bar"></span><span class="boot-bar"></span><span class="boot-bar boot-btn"></span>
+          </span>
+        </div>
+        <div class="boot-hero">
+          <div class="boot-hero-inner">
+            <span class="boot-bar boot-eyebrow"></span>
+            <span class="boot-bar boot-h1"></span>
+            <span class="boot-bar boot-h1 boot-h1-short"></span>
+            <span class="boot-bar boot-copy"></span>
+            <span class="boot-bar boot-copy boot-copy-short"></span>
+            <span class="boot-actions"><span class="boot-bar boot-btn"></span><span class="boot-bar boot-btn boot-btn-ghost"></span></span>
+          </div>
+        </div>
+        <div class="boot-body">
+          <span class="boot-bar boot-section-title"></span>
+          <span class="boot-bar boot-section-sub"></span>
+          <div class="boot-grid">
+            <span class="boot-card"></span><span class="boot-card"></span><span class="boot-card"></span>
+          </div>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/01-FRONTEND/main.jsx"></script>
   </body>
 </html>

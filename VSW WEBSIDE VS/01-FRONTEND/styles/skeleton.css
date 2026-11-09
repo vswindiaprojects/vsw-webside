@@ -1,0 +1,253 @@
+/* Skeleton loading system — shimmer placeholders while content loads. */
+.skeleton {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #e5eae8;
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  animation: skeletonSweep 1.45s ease-in-out infinite;
+}
+
+.skeleton-dark {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.skeleton-dark::after {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+}
+
+.skeleton-line {
+  width: 100%;
+  height: 12px;
+}
+
+.skeleton-line-short {
+  width: 62%;
+}
+
+.skeleton-eyebrow {
+  width: 130px;
+  height: 10px;
+  margin-bottom: 18px;
+}
+
+.skeleton-title {
+  width: min(360px, 76%);
+  height: 30px;
+  margin-bottom: 14px;
+}
+
+.skeleton-sub {
+  width: min(420px, 88%);
+  height: 11px;
+}
+
+@keyframes skeletonSweep {
+  100% { transform: translateX(100%); }
+}
+
+/* ----- Client logo strip + brands grid ----- */
+.client-logos-skeleton {
+  animation: none;
+}
+
+.client-logos-skeleton .skeleton-eyebrow,
+.client-logos-skeleton .skeleton-title {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.skeleton-marquee {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  padding: 0 clamp(20px, 5vw, 70px);
+  overflow: hidden;
+}
+
+.skeleton-logo-card {
+  flex: 0 0 auto;
+  width: clamp(120px, 14vw, 170px);
+  height: 78px;
+  border: 1px solid var(--line, #d9e0e1);
+  background: #eef2f0;
+}
+
+.all-clients-skeleton .all-clients__head {
+  margin-bottom: clamp(26px, 4vw, 40px);
+}
+
+.all-clients-skeleton .skeleton-tile {
+  width: 100%;
+  height: 96px;
+}
+
+/* ----- Project counter board ----- */
+.counter-skeleton {
+  padding: clamp(76px, 10vw, 130px) 0;
+  background: var(--navy, #07131f);
+  color: #fff;
+}
+
+.counter-skeleton-head {
+  max-width: 640px;
+  margin-bottom: clamp(34px, 5vw, 54px);
+}
+
+.counter-skeleton-body {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(30px, 5vw, 70px);
+  align-items: center;
+}
+
+.counter-skeleton-primary {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.counter-skeleton-number {
+  width: min(230px, 70%);
+  height: clamp(80px, 9vw, 118px);
+}
+
+.counter-skeleton .skeleton-label {
+  width: 190px;
+  height: 12px;
+}
+
+.counter-skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 28px;
+}
+
+.skeleton-stat {
+  height: 64px;
+  border-radius: 3px;
+}
+
+/* ----- Reviews section ----- */
+.reviews-skeleton-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 30px 28px 26px;
+  border: 1px solid var(--line, #d9e0e1);
+  border-radius: var(--theme-card-radius, 0);
+  background: var(--paper, #f4f6f4);
+}
+
+.reviews-skeleton-card .skeleton-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 3px;
+}
+
+.reviews-skeleton-card .skeleton-stars {
+  width: 96px;
+  height: 12px;
+}
+
+.reviews-skeleton-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line, #d9e0e1);
+}
+
+.skeleton-avatar {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: 50%;
+}
+
+.reviews-skeleton-author > div {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  flex: 1;
+}
+
+.skeleton-name {
+  width: 45%;
+  height: 11px;
+}
+
+.reviews-skeleton-author .skeleton-meta {
+  width: 32%;
+  height: 9px;
+}
+
+/* ----- Image placeholders (photo cards & about image) ----- */
+.project-image,
+.about-image {
+  background: linear-gradient(100deg, #e2e8e5 20%, #f0f4f2 34%, #e2e8e5 48%);
+  background-size: 220% 100%;
+  animation: mediaShimmer 1.7s linear infinite;
+}
+
+.project-image img,
+.about-image img {
+  position: relative;
+  z-index: 1;
+}
+
+.project-image .project-open,
+.project-image .project-status {
+  z-index: 2;
+}
+
+@keyframes mediaShimmer {
+  0% { background-position: 130% 0; }
+  100% { background-position: -130% 0; }
+}
+
+@media (max-width: 900px) {
+  .counter-skeleton-body {
+    grid-template-columns: 1fr;
+  }
+
+  .skeleton-marquee {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .skeleton-logo-card {
+    width: 112px;
+    height: 66px;
+  }
+
+  .counter-skeleton-grid {
+    gap: 14px 18px;
+  }
+
+  .skeleton-stat {
+    height: 56px;
+  }
+
+  .reviews-skeleton-card {
+    padding: 24px 20px 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after,
+  .project-image,
+  .about-image {
+    animation: none;
+  }
+}

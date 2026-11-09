@@ -11,6 +11,7 @@ import ProjectCounter from '../components/ProjectCounter'
 import CallButton from '../components/CallButton'
 import ReviewButton from '../components/ReviewButton'
 import ReviewsSection from '../components/ReviewsSection'
+import { ClientLogosSkeleton, CounterSkeleton } from '../components/Skeletons'
 import { useAuth } from '../services/AuthContext'
 
 const Admin = lazy(() => import('../../04-ADMIN/pages/Admin'))
@@ -182,13 +183,15 @@ export default function App() {
   const [theme, setTheme] = useState({})
   const [clientLogos, setClientLogos] = useState(null)
   const [projectCounter, setProjectCounter] = useState(null)
+  const [clientLogosLoading, setClientLogosLoading] = useState(true)
+  const [counterLoading, setCounterLoading] = useState(true)
   useEffect(() => {
     const previewing = isThemePreview
     const adminToken = previewing ? localStorage.getItem('vsw_admin_token') : null
     const themeRequest = adminToken ? api.adminTheme(adminToken).then((result) => ({ data: { theme: result.data.draft } })) : api.publicTheme()
     const clientLogosRequest = adminToken ? api.adminClientLogos(adminToken).then((result) => ({ data: result.data.draft })) : api.publicClientLogos()
     const projectCounterRequest = adminToken ? api.adminProjectCounter(adminToken).then((result) => ({ data: result.data.draft })) : api.publicProjectCounter()
-    Promise.allSettled([api.projects(), api.services(), api.company(), api.publicContent(), themeRequest, clientLogosRequest, projectCounterRequest]).then(([projectResult, serviceResult, companyResult, contentResult, themeResult, clientLogosResult, counterResult]) => {
+    Promise.allSettled([api.projects(), api.services(), api.company(), api.publicContent(), themeRequest]).then(([projectResult, serviceResult, companyResult, contentResult, themeResult]) => {
       if (projectResult.status === 'fulfilled') setProjects(mergePortfolioProjects(projectResult.value.data))
       if (serviceResult.status === 'fulfilled' && serviceResult.value.data.length) { setServices(serviceResult.value.data.map((service, position) => { const fallback = fallbackServices.find((item) => item.title === service.title) || fallbackServices[Number(service.displayOrder || position + 1) - 1] || fallbackServices[0]; return { number: String(service.displayOrder || position + 1).padStart(2, '0'), title: service.title ?? service['Service Name'] ?? fallback.title, short: fallback.short ?? service.description ?? service['Short Description'], description: service.description ?? service['Full Description'] ?? fallback.description, image: service.image || fallback.image, icon: serviceIcons[service.icon ?? service.Icon] || fallback.icon } })) }
       if (companyResult.status === 'fulfilled') setCompany(companyResult.value.data)
@@ -200,16 +203,24 @@ export default function App() {
       } else {
         try { const cachedTheme = JSON.parse(localStorage.getItem('vsw_theme_cache') || 'null'); if (cachedTheme) setTheme(cachedTheme) } catch { /* ignore corrupt cache */ }
       }
-      if (clientLogosResult.status === 'fulfilled') {
-        const logos = clientLogosResult.value.data || null
+    })
+
+    clientLogosRequest
+      .then((result) => {
+        const logos = result.data || null
         setClientLogos(logos)
         // Keep the last good set so the client strip never goes blank if the API blips.
         try { localStorage.setItem('vsw_client_logos_cache', JSON.stringify(logos)) } catch { /* storage may be unavailable */ }
-      } else {
+      })
+      .catch(() => {
         try { const cached = JSON.parse(localStorage.getItem('vsw_client_logos_cache') || 'null'); if (cached) setClientLogos(cached) } catch { /* ignore corrupt cache */ }
-      }
-      if (counterResult.status === 'fulfilled') setProjectCounter(counterResult.value.data || null)
-    })
+      })
+      .finally(() => setClientLogosLoading(false))
+
+    projectCounterRequest
+      .then((result) => setProjectCounter(result.data || null))
+      .catch(() => {})
+      .finally(() => setCounterLoading(false))
   }, [isThemePreview])
   useEffect(() => {
     if (!isThemePreview) return
@@ -380,5 +391,5 @@ export default function App() {
   const homeDraft = !isThemePreview && theme.pages?.home?.status === 'draft'
   const logoBoardAfter = sections.some((section) => section.id === 'strengths') ? 'strengths' : 'hero'
   const counterAfter = sections.some((section) => section.id === 'projects') ? 'projects' : (sections[0]?.id || null)
-  return <div ref={appRef} className={isThemePreview ? 'theme-preview-mode' : undefined} style={themeStyle}><Navbar theme={theme}/><main>{homeDraft ? <div className="theme-unpublished-page">This page is not published.</div> : sections.map((section) => <Fragment key={section.id}><div id={theme.pages?.[section.id]?.slug !== section.id ? theme.pages?.[section.id]?.slug : undefined} data-theme-section={section.id} className="theme-page-section">{sectionComponents[section.id]}</div>{section.id === logoBoardAfter && clientLogos && <ClientLogoMarquee config={clientLogos}/>}{section.id === logoBoardAfter && clientLogos && <AllClients config={clientLogos}/>}{section.id === counterAfter && projectCounter && <ProjectCounter config={projectCounter}/>}</Fragment>)}<ReviewsSection/></main><Footer company={company} content={{...(websiteContent.footer?.main||{}),...(theme.footer||{})}} theme={theme}/><CallButton phone={company.phone2 || '+91 91365 14351'}/><ReviewButton/></div>
+  return <div ref={appRef} className={isThemePreview ? 'theme-preview-mode' : undefined} style={themeStyle}><Navbar theme={theme}/><main>{homeDraft ? <div className="theme-unpublished-page">This page is not published.</div> : sections.map((section) => <Fragment key={section.id}><div id={theme.pages?.[section.id]?.slug !== section.id ? theme.pages?.[section.id]?.slug : undefined} data-theme-section={section.id} className="theme-page-section">{sectionComponents[section.id]}</div>{section.id === logoBoardAfter && (clientLogosLoading ? <ClientLogosSkeleton/> : clientLogos ? <><ClientLogoMarquee config={clientLogos}/><AllClients config={clientLogos}/></> : null)}{section.id === counterAfter && (counterLoading ? <CounterSkeleton/> : projectCounter ? <ProjectCounter config={projectCounter}/> : null)}</Fragment>)}<ReviewsSection/></main><Footer company={company} content={{...(websiteContent.footer?.main||{}),...(theme.footer||{})}} theme={theme}/><CallButton phone={company.phone2 || '+91 91365 14351'}/><ReviewButton/></div>
 }
