@@ -24,6 +24,16 @@ export default function ReviewButton() {
   const dialogRef = useRef(null)
 
   useEffect(() => {
+    const onOpen = () => {
+      setStatus({ type: '', text: '' })
+      setThanks(false)
+      setOpen(true)
+    }
+    window.addEventListener('vsw:open-review', onOpen)
+    return () => window.removeEventListener('vsw:open-review', onOpen)
+  }, [])
+
+  useEffect(() => {
     if (!open) return undefined
     const onKey = (event) => { if (event.key === 'Escape') setOpen(false) }
     document.addEventListener('keydown', onKey)
@@ -55,6 +65,7 @@ export default function ReviewButton() {
       })
       setThanks(true)
       setForm({ name: '', company: '', rating: 5, message: '' })
+      window.dispatchEvent(new Event('vsw:review-submitted'))
     } catch (error) {
       setStatus({ type: 'error', text: error.message || 'Could not submit your review. Please try again.' })
     } finally {
@@ -79,7 +90,7 @@ export default function ReviewButton() {
         </header>
 
         {thanks ? <>
-          <p className="reviews-thanks">Your review has been submitted. We really appreciate you taking the time to share your experience with us.</p>
+          <p className="reviews-thanks">Your review has been added to the Client Reviews section at the bottom of the page. Thank you for sharing your experience with us.</p>
           <button type="button" className="reviews-submit" onClick={() => setOpen(false)}>Done</button>
         </> : <form onSubmit={submit} className="reviews-form">
           <div className="reviews-form-stars">

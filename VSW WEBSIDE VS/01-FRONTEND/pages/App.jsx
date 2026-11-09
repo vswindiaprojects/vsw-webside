@@ -10,6 +10,7 @@ import AllClients from '../components/AllClients'
 import ProjectCounter from '../components/ProjectCounter'
 import CallButton from '../components/CallButton'
 import ReviewButton from '../components/ReviewButton'
+import ReviewsSection from '../components/ReviewsSection'
 import { useAuth } from '../services/AuthContext'
 
 const Admin = lazy(() => import('../../04-ADMIN/pages/Admin'))
@@ -25,7 +26,7 @@ const route = (element) => <Suspense fallback={routeFallback}>{element}</Suspens
 
 gsap.registerPlugin(ScrollTrigger)
 
-const navItems = [['About', 'about'], ['Services', 'services'], ['Projects', 'projects'], ['Workflow', 'workflow'], ['Why VSW', 'why-vsw'], ['Contact', 'contact']]
+const navItems = [['About', 'about'], ['Services', 'services'], ['Projects', 'projects'], ['Workflow', 'workflow'], ['Why VSW', 'why-vsw'], ['Reviews', 'reviews'], ['Contact', 'contact']]
 const categories = projectCategories
 const normalizeProjectName = (name = '') => name.toLowerCase().replace(/[^a-z0-9]/g, '')
 const projectAliases = { tcs: 'TCS Project', wework: 'We Work', dypatilcollege: 'D. Y. Patil College Hall', hiveicon67: 'Hive Icon 67, Office space', newgovernmentmedicalcollege: 'New Government Medical College Hall', kanakiyahighschool: 'Kanakiya High School Hall', lionsclubchemberhospital: 'Lions Club – Chembur – Hospital' }
@@ -70,7 +71,7 @@ function Navbar({ theme = {} }) {
   const logo = branding.primaryLogo || '/assets/images/vsw-logo.png'
   return <header className={`navbar ${scrolled ? 'navbar-scrolled' : ''} ${header.sticky === false ? 'navbar-not-sticky' : ''}`} style={{ height: header.height || undefined, '--theme-logo-width': `${branding.logoWidth || 220}px`, '--theme-mobile-logo-width': `${branding.mobileLogoWidth || branding.logoWidth || 220}px` }}>
     <a href={branding.logoHref || '#home'} className="brand" onClick={() => setOpen(false)}><picture><source media="(max-width: 600px)" srcSet={branding.mobileLogo || logo}/><img className="brand-logo" src={logo} alt={branding.logoAlt || 'VSW Solutions - A Total Solution'}/></picture></a>
-    <nav className={`nav-links nav-align-${header.navAlignment || 'right'} ${open ? 'nav-links-open' : ''}`}>{links.map(([label, href]) => <a key={`${label}-${href}`} href={href} onClick={() => setOpen(false)}>{label}</a>)}{header.showAccount !== false && ((authLoading ? Boolean(localStorage.getItem('vsw_user_token')) : Boolean(user)) ? <><a className="nav-auth-link" href="/account" onClick={() => setOpen(false)}>My Account</a><button className="nav-auth-link nav-auth-button" onClick={() => { logout(); setOpen(false) }}>Logout</button></> : <><a className="nav-auth-link" href="/login" onClick={() => setOpen(false)}>Login</a><a className="nav-auth-link nav-auth-register" href="/register" onClick={() => setOpen(false)}>Register</a></>)}<Button href="#contact">Start a Project</Button></nav>
+    <nav className={`nav-links nav-align-${header.navAlignment || 'right'} ${open ? 'nav-links-open' : ''}`}>{links.map(([label, href]) => <a key={`${label}-${href}`} href={href} className={label === 'Reviews' ? 'nav-review-link' : undefined} onClick={() => setOpen(false)}>{label}</a>)}{header.showAccount !== false && ((authLoading ? Boolean(localStorage.getItem('vsw_user_token')) : Boolean(user)) ? <><a className="nav-auth-link" href="/account" onClick={() => setOpen(false)}>My Account</a><button className="nav-auth-link nav-auth-button" onClick={() => { logout(); setOpen(false) }}>Logout</button></> : <><a className="nav-auth-link" href="/login" onClick={() => setOpen(false)}>Login</a><a className="nav-auth-link nav-auth-register" href="/register" onClick={() => setOpen(false)}>Register</a></>)}<Button href="#contact">Start a Project</Button></nav>
     <button className="menu-button" aria-label="Toggle navigation" onClick={() => setOpen(!open)}>{open ? <X size={22} /> : <Menu size={22} />}</button>
   </header>
 }
@@ -379,5 +380,5 @@ export default function App() {
   const homeDraft = !isThemePreview && theme.pages?.home?.status === 'draft'
   const logoBoardAfter = sections.some((section) => section.id === 'strengths') ? 'strengths' : 'hero'
   const counterAfter = sections.some((section) => section.id === 'projects') ? 'projects' : (sections[0]?.id || null)
-  return <div ref={appRef} className={isThemePreview ? 'theme-preview-mode' : undefined} style={themeStyle}><Navbar theme={theme}/><main>{homeDraft ? <div className="theme-unpublished-page">This page is not published.</div> : sections.map((section) => <Fragment key={section.id}><div id={theme.pages?.[section.id]?.slug !== section.id ? theme.pages?.[section.id]?.slug : undefined} data-theme-section={section.id} className="theme-page-section">{sectionComponents[section.id]}</div>{section.id === logoBoardAfter && clientLogos && <ClientLogoMarquee config={clientLogos}/>}{section.id === logoBoardAfter && clientLogos && <AllClients config={clientLogos}/>}{section.id === counterAfter && projectCounter && <ProjectCounter config={projectCounter}/>}</Fragment>)}</main><Footer company={company} content={{...(websiteContent.footer?.main||{}),...(theme.footer||{})}} theme={theme}/><CallButton phone={company.phone2 || '+91 91365 14351'}/><ReviewButton/></div>
+  return <div ref={appRef} className={isThemePreview ? 'theme-preview-mode' : undefined} style={themeStyle}><Navbar theme={theme}/><main>{homeDraft ? <div className="theme-unpublished-page">This page is not published.</div> : sections.map((section) => <Fragment key={section.id}><div id={theme.pages?.[section.id]?.slug !== section.id ? theme.pages?.[section.id]?.slug : undefined} data-theme-section={section.id} className="theme-page-section">{sectionComponents[section.id]}</div>{section.id === logoBoardAfter && clientLogos && <ClientLogoMarquee config={clientLogos}/>}{section.id === logoBoardAfter && clientLogos && <AllClients config={clientLogos}/>}{section.id === counterAfter && projectCounter && <ProjectCounter config={projectCounter}/>}</Fragment>)}<ReviewsSection/></main><Footer company={company} content={{...(websiteContent.footer?.main||{}),...(theme.footer||{})}} theme={theme}/><CallButton phone={company.phone2 || '+91 91365 14351'}/><ReviewButton/></div>
 }
