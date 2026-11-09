@@ -44,7 +44,7 @@ const projectVisuals = {
   'The Collective (ABFRL)': ['earlier-projects/the-collective-abfrl', 'The Collective storefront'],
   'AIR INDIA': ['earlier-projects/air-india', 'Airport terminal interior'],
   '7 APPLE': ['earlier-projects/7-apple', 'Hospitality resort architecture'],
-  'Vidya Niketan School': ['earlier-projects/vidya-niketan', 'School building interior'],
+  'Vidya Niketan School': ['earlier-projects/vidya-niketan-school-hall', 'School corridor with playful classroom entrances'],
 }
 
 const projectRecords = [
