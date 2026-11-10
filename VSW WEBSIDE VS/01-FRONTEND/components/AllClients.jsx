@@ -30,7 +30,7 @@ export default function AllClients({ config = {} }) {
   if (!logos.length || config.visible === false || config.showAllClients === false) return null
 
   const sorted = [...logos].sort(sortByName)
-  const heading = config.allClientsHeading || 'Our Brands'
+  const heading = config.allClientsHeading || 'Brands'
   const eyebrow = config.allClientsEyebrow || ''
   const subheading = config.allClientsSubheading
     || `${sorted.length} clients and project partners across India — global brands, developers, hospitality groups and institutions.`

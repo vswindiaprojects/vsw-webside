@@ -2,7 +2,7 @@ import '../styles/skeleton.css'
 
 const range = (count) => Array.from({ length: count }, (_, index) => index)
 
-/** Placeholder for the client-logo strip and the full "Our Brands" grid. */
+/** Placeholder for the client-logo strip and the full "Brands" grid. */
 export function ClientLogosSkeleton() {
   return <>
     <section className="client-logos-section client-logos-skeleton" aria-hidden="true">
