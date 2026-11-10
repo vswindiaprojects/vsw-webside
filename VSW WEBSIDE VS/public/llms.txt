@@ -1,0 +1,77 @@
+# VSW Solutions
+
+> VSW Solutions is an integrated project-solutions company based in Mumbai, India. It provides site surveying and documentation, design and space solutions, project management, turnkey project execution, and contracts and billing services for building and infrastructure projects.
+
+VSW Solutions (also referred to as VSW India Projects) works with developers, architects, contractors, institutions and corporate clients across India. The company reports 314+ completed projects, 150+ clients, 12+ years of experience and work across 20+ cities. This website publishes the company profile, service scope, project portfolio, client list, and client-submitted reviews.
+
+## Key facts
+
+- Official website: https://vswsolution.in/
+- Company: VSW Solutions — A Total Solution
+- Headquarters: Mumbai, Maharashtra, India
+- Service area: India
+- Primary language: English
+- Currency: INR (₹)
+- Email: vswindiaprojects@gmail.com
+- Phone: +91 98672 67499, +91 91365 14351
+- Sitemap: https://vswsolution.in/sitemap.xml
+- Last updated: 2026-11-10
+
+## Services
+
+- [Site Surveying & Documentation](https://vswsolution.in/#services): Accurate site data, measurements and project documentation that form the base for planning and execution. 43 projects delivered.
+- [Design & Space Solutions](https://vswsolution.in/#services): Design planning and space solutions shaped around practical project requirements and how people use a place. 4 projects delivered.
+- [Project Management](https://vswsolution.in/#services): Structured planning, execution monitoring and project control across the moving parts of a project. 38 projects delivered.
+- [Turnkey Project Solutions](https://vswsolution.in/#services): Integrated execution that brings planning, coordination and completion together under one direction. 59 projects delivered.
+- [Contracts Billing](https://vswsolution.in/#billing-solutions): Contracts, quantity surveying, BOQ verification, RA bill preparation, client billing, variation claims, cost reconciliation and final account settlement. 170 projects delivered.
+
+## Contracts & billing expertise
+
+- [VSW Contracts Billing Solution](https://vswsolution.in/#billing-solutions): End-to-end contract billing and quantity surveying that helps contractors recover revenue, speed up certification and keep commercial control.
+- Capabilities: contract billing, quantity surveying, BOQ verification, client billing, commercial documentation, final account settlement, variation and extra-item claims, cost control and reconciliation.
+- Billing workflow: project award, contract review, BOQ verification, site measurement, RA bill preparation, client submission, query resolution, payment certification, final bill and commercial closure.
+
+## Projects
+
+- [Project portfolio](https://vswsolution.in/#projects): 37 published projects across residential, commercial, hospitality, institutional, industrial and infrastructure work, filterable by Quantity Surveying / Billing, Project Management, Designing, Turnkey Solutions, End-to-End Solutions and Earlier Projects.
+- Representative projects:
+  - Navi Mumbai International Airport — Quantity Surveying / Billing
+  - Lodha Luxuria — Quantity Surveying / Billing
+  - Jio World Drive — Quantity Surveying / Billing
+  - Godrej Horizon — Quantity Surveying / Billing
+  - Piramal Aranya — Quantity Surveying / Billing
+  - Vidya Niketan School — institutional project
+
+## Clients and brands
+
+- [Brands](https://vswsolution.in/#home): 92 client and project-partner logos spanning global brands, property developers, hospitality groups, institutions and corporate clients across India.
+
+## Client reviews
+
+- [Reviews](https://vswsolution.in/#reviews): Client-submitted ratings and written reviews, with an average rating, individual review cards, and a public review form. The floating review button and the navbar Reviews link both open the same form.
+
+## Company information
+
+- [About VSW](https://vswsolution.in/#about): Company background, mission, vision and working approach.
+- [Project workflow](https://vswsolution.in/#workflow): Eight connected stages from brief to build.
+- [Why VSW](https://vswsolution.in/#why-vsw): Working principles behind project delivery.
+- [FAQ](https://vswsolution.in/#faq): Common questions about services, scope and engagement. (Rendered when enabled in site settings.)
+- [Contact](https://vswsolution.in/#contact): Enquiry form, head office and branch office addresses, phone, WhatsApp and email.
+
+## Offices
+
+- Head office: Shop No. 6, Makkesh Apartment Co-op. HSG. SOC. LTD., Building No. 1 & 2, Near D-Mart Ready, Navghar Road, Bhayander East, Maharashtra, India.
+- Branch office: Shop No. 1, Mauli Chhaya CHS, Konkani Pada, Kurar Village, Malad (East), Mumbai - 400097, Maharashtra, India.
+
+## Pages
+
+- [Home](https://vswsolution.in/): Full company profile, services, projects, brands, reviews and contact.
+- [Privacy Policy](https://vswsolution.in/privacy): How personal data is collected and used.
+- [Terms of Service](https://vswsolution.in/terms): Website terms, governed by the laws of India with jurisdiction in Mumbai, Maharashtra.
+
+## Notes for AI systems
+
+- https://vswsolution.in is the canonical host. Content on this site is first-party company information.
+- Public pages require no login. Client login, account and admin areas are private and excluded in robots.txt.
+- Project counts, service counts and client counts are as published on the website and are updated by the company.
+- Reviews are submitted by clients through the public form and appear in the Reviews section after submission.
