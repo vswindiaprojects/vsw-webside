@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: vsw-backend
+    runtime: node
+    plan: free
+    rootDir: "VSW WEBSIDE VS/02-BACKEND"
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        value: https://vswsolution.in,https://www.vswsolution.in
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: "4000"
+      - key: DB_NAME
+        value: vsw_solutions
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_SSL
+        value: "true"
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: CONTACT_TABLE
+        value: contact_inquiries
+      - key: UPLOADS_DIR
+        value: uploads
+      - key: INQUIRY_RECEIVER_EMAIL
+        value: vswindiaprojects@gmail.com
